@@ -38,10 +38,16 @@ function naarCriteria(waarden) {
   };
 }
 
+function maakZoekresultaat(waarden) {
+  const criteria = naarCriteria(waarden);
+  return { criteria, ...zoekBestemmingen(data.bestemmingen, criteria) };
+}
+
 export default function App() {
   const [waarden, setWaarden] = useState(STARTWAARDEN);
   const [fouten, setFouten] = useState({});
-  const [zoekresultaat, setZoekresultaat] = useState(null);
+  // Toon direct een top 5 voor de standaardwaarden, zodat de pagina nooit leeg opent.
+  const [zoekresultaat, setZoekresultaat] = useState(() => maakZoekresultaat(STARTWAARDEN));
   const resultatenRef = useRef(null);
 
   const zoek = (zoekwaarden) => {
@@ -49,8 +55,7 @@ export default function App() {
     setFouten(nieuweFouten);
     if (Object.keys(nieuweFouten).length > 0) return;
 
-    const criteria = naarCriteria(zoekwaarden);
-    setZoekresultaat({ criteria, ...zoekBestemmingen(data.bestemmingen, criteria) });
+    setZoekresultaat(maakZoekresultaat(zoekwaarden));
 
     // Op mobiel staan de resultaten onder het formulier: scroll ernaartoe.
     if (window.matchMedia('(max-width: 1023px)').matches) {

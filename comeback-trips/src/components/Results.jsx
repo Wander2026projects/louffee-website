@@ -2,14 +2,11 @@ import { AANTAL_RESULTATEN, MAANDEN } from '../lib/constants.js';
 import DestinationCard from './DestinationCard.jsx';
 import NoResults from './NoResults.jsx';
 import ScoreExplanation from './ScoreExplanation.jsx';
-import StartState from './StartState.jsx';
 
 export default function Results({ ref, zoekresultaat, onPasAan }) {
   let inhoud;
 
-  if (!zoekresultaat) {
-    inhoud = <StartState />;
-  } else if (zoekresultaat.resultaten.length === 0) {
+  if (zoekresultaat.resultaten.length === 0) {
     inhoud = (
       <NoResults
         criteria={zoekresultaat.criteria}
