@@ -1,4 +1,14 @@
-export const LUCHTHAVENS = ['Schiphol', 'Eindhoven', 'Rotterdam'];
+/** Vertrekluchthavens. Die over de grens zijn vaak goedkoper voor wie in het zuiden of oosten woont. */
+export const LUCHTHAVENS = [
+  { id: 'Schiphol', code: 'AMS', label: 'Schiphol', buitenland: false },
+  { id: 'Eindhoven', code: 'EIN', label: 'Eindhoven', buitenland: false },
+  { id: 'Rotterdam', code: 'RTM', label: 'Rotterdam', buitenland: false },
+  { id: 'Weeze', code: 'NRN', label: 'Weeze', buitenland: true },
+  { id: 'Düsseldorf', code: 'DUS', label: 'Düsseldorf', buitenland: true },
+  { id: 'Brussel-Charleroi', code: 'CRL', label: 'Charleroi', buitenland: true },
+];
+
+export const STANDAARD_LUCHTHAVENS = LUCHTHAVENS.filter((l) => !l.buitenland).map((l) => l.id);
 
 export const MAANDEN = [
   'januari',
@@ -15,12 +25,31 @@ export const MAANDEN = [
   'december',
 ];
 
+export const MAANDEN_KORT = ['jan', 'feb', 'mrt', 'apr', 'mei', 'jun', 'jul', 'aug', 'sep', 'okt', 'nov', 'dec'];
+
 export const VAKANTIETYPES = [
   { id: 'strand', label: 'Strand', icoon: '🏖️' },
   { id: 'stad', label: 'Stad', icoon: '🏙️' },
   { id: 'natuur', label: 'Natuur', icoon: '🌿' },
   { id: 'cultuur', label: 'Cultuur', icoon: '🏛️' },
 ];
+
+export const INCIDENTSOORTEN = [
+  { id: 'aanslag', label: 'Aanslag of geweld' },
+  { id: 'onrust', label: 'Onrust' },
+  { id: 'conflict', label: 'Oorlog of conflict' },
+  { id: 'natuurramp', label: 'Natuurramp' },
+];
+
+/** Keuzes voor hoe lang geleden het incident mag zijn (in maanden; null = maakt niet uit). */
+export const RECENTHEID = [
+  { id: 'alle', label: 'Maakt niet uit', maxMaanden: null },
+  { id: '12', label: 'In de laatste 12 maanden', maxMaanden: 12 },
+  { id: '24', label: 'In de laatste 2 jaar', maxMaanden: 24 },
+];
+
+/** Een incident van minder dan zoveel maanden geleden krijgt het label "recent". */
+export const RECENT_MAANDEN = 12;
 
 export const MIN_DAGEN = 3;
 export const MAX_DAGEN = 21;
@@ -67,14 +96,16 @@ export const TREND_INFO = {
 export const JAREN_VOOR_BONUS = 3;
 
 /**
- * Prijzen in de data gelden voor 7 dagen. Bij omrekenen naar een andere reisduur
- * blijft dit deel (globaal de vlucht) gelijk en schaalt de rest (verblijf) per dag mee.
+ * Geschatte meerkosten als een reis vanaf geen van de gekozen luchthavens wordt aangeboden
+ * (reis naar een andere luchthaven of een extra overstap).
  */
-export const VAST_PRIJSAANDEEL = 0.4;
-
-/** Geschatte meerkosten als de reis niet vanaf de gekozen luchthaven wordt aangeboden. */
 export const LUCHTHAVEN_TOESLAG = 80;
 
-export const AANTAL_RESULTATEN = 5;
+export const SORTEEROPTIES = [
+  { id: 'waarde', label: 'Beste waarde' },
+  { id: 'prijs', label: 'Laagste totaalprijs' },
+  { id: 'vlucht', label: 'Goedkoopste vlucht' },
+  { id: 'recent', label: 'Meest recente incident' },
+];
 
-export const MAANDEN_KORT = ['jan', 'feb', 'mrt', 'apr', 'mei', 'jun', 'jul', 'aug', 'sep', 'okt', 'nov', 'dec'];
+export const AANTAL_RESULTATEN = 5;

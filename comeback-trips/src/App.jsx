@@ -4,18 +4,28 @@ import Footer from './components/Footer.jsx';
 import Header from './components/Header.jsx';
 import Results from './components/Results.jsx';
 import SampleDataNotice from './components/SampleDataNotice.jsx';
+import SavedList from './components/SavedList.jsx';
 import SearchForm from './components/SearchForm.jsx';
-import { MAX_DAGEN, MIN_DAGEN, STANDAARD_VEILIGHEIDSNIVEAU } from './lib/constants.js';
+import TravelTips from './components/TravelTips.jsx';
+import {
+  MAX_DAGEN,
+  MIN_DAGEN,
+  STANDAARD_LUCHTHAVENS,
+  STANDAARD_VEILIGHEIDSNIVEAU,
+} from './lib/constants.js';
 import { zoekBestemmingen } from './lib/scoring.js';
+import useBewaarlijst from './lib/useBewaarlijst.js';
 
 const volgendeMaand = (new Date().getMonth() + 1) % 12 + 1;
 
 const STARTWAARDEN = {
   budget: '1000',
-  luchthaven: 'Schiphol',
+  luchthavens: STANDAARD_LUCHTHAVENS,
   maand: volgendeMaand,
   dagen: 7,
   types: [],
+  soorten: [],
+  recentheid: 'alle',
   veiligheidsniveau: STANDAARD_VEILIGHEIDSNIVEAU,
 };
 
@@ -26,6 +36,9 @@ function valideer(waarden) {
     fouten.budget = 'Vul een budget in.';
   } else if (budget < 100) {
     fouten.budget = 'Kies een budget van minimaal € 100.';
+  }
+  if (waarden.luchthavens.length === 0) {
+    fouten.luchthavens = 'Kies minimaal één luchthaven.';
   }
   return fouten;
 }
@@ -48,6 +61,8 @@ export default function App() {
   const [fouten, setFouten] = useState({});
   // Toon direct een top 5 voor de standaardwaarden, zodat de pagina nooit leeg opent.
   const [zoekresultaat, setZoekresultaat] = useState(() => maakZoekresultaat(STARTWAARDEN));
+  const [volgorde, setVolgorde] = useState('waarde');
+  const { bewaard, wissel } = useBewaarlijst();
   const resultatenRef = useRef(null);
 
   const zoek = (zoekwaarden) => {
@@ -79,16 +94,27 @@ export default function App() {
         <SampleDataNotice />
 
         <div className="mt-8 grid gap-8 lg:grid-cols-[minmax(0,380px)_minmax(0,1fr)] lg:items-start">
-          <div>
+          <div className="space-y-6">
             <SearchForm
               waarden={waarden}
               fouten={fouten}
               onChange={setWaarden}
               onSubmit={() => zoek(waarden)}
             />
+            <SavedList bestemmingen={data.bestemmingen} bewaard={bewaard} onWisselBewaard={wissel} />
           </div>
-          <Results ref={resultatenRef} zoekresultaat={zoekresultaat} onPasAan={pasAanEnZoek} />
+          <Results
+            ref={resultatenRef}
+            zoekresultaat={zoekresultaat}
+            volgorde={volgorde}
+            onVolgorde={setVolgorde}
+            bewaard={bewaard}
+            onWisselBewaard={wissel}
+            onPasAan={pasAanEnZoek}
+          />
         </div>
+
+        <TravelTips />
       </main>
 
       <Footer />

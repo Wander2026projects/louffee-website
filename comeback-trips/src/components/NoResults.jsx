@@ -15,7 +15,14 @@ function TipKnop({ children, onClick }) {
 }
 
 export default function NoResults({ criteria, suggesties, onPasAan }) {
-  const { minimaalBudget, andereMaanden = [], aantalZonderType = 0 } = suggesties ?? {};
+  const {
+    minimaalBudget,
+    andereMaanden = [],
+    aantalZonderType = 0,
+    aantalZonderSoort = 0,
+    aantalZonderRecentheid = 0,
+  } = suggesties ?? {};
+  const aantal = (n) => `${n} ${n === 1 ? 'bestemming' : 'bestemmingen'}`;
   const snelleMaanden = andereMaanden.slice(0, 4);
 
   return (
@@ -61,12 +68,27 @@ export default function NoResults({ criteria, suggesties, onPasAan }) {
 
         {aantalZonderType > 0 && (
           <li className="rounded-xl bg-stone-50 p-4">
-            <p>
-              🧭 Zonder filter op type vakantie vind je {aantalZonderType}{' '}
-              {aantalZonderType === 1 ? 'bestemming' : 'bestemmingen'}.
-            </p>
+            <p>🧭 Zonder filter op type vakantie vind je {aantal(aantalZonderType)}.</p>
             <div className="mt-2">
               <TipKnop onClick={() => onPasAan({ types: [] })}>Toon alle types</TipKnop>
+            </div>
+          </li>
+        )}
+
+        {aantalZonderRecentheid > 0 && (
+          <li className="rounded-xl bg-stone-50 p-4">
+            <p>🕒 Zonder tijdsfilter op het incident vind je {aantal(aantalZonderRecentheid)}.</p>
+            <div className="mt-2">
+              <TipKnop onClick={() => onPasAan({ recentheid: 'alle' })}>Toon alle incidenten</TipKnop>
+            </div>
+          </li>
+        )}
+
+        {aantalZonderSoort > 0 && (
+          <li className="rounded-xl bg-stone-50 p-4">
+            <p>📰 Met alle soorten incidenten vind je {aantal(aantalZonderSoort)}.</p>
+            <div className="mt-2">
+              <TipKnop onClick={() => onPasAan({ soorten: [] })}>Alle soorten tonen</TipKnop>
             </div>
           </li>
         )}

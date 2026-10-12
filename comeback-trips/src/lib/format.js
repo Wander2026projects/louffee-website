@@ -20,9 +20,14 @@ export const formatDecimaal = (getal) => decimaalFormatter.format(getal);
 
 export const formatProcent = (getal) => `${Math.round(getal)}%`;
 
-export function formatJarenGeleden(jaar, huidigJaar = new Date().getFullYear()) {
-  const verschil = huidigJaar - jaar;
-  if (verschil <= 0) return 'dit jaar';
-  if (verschil === 1) return 'vorig jaar';
-  return `${verschil} jaar geleden`;
+export function formatMaandenGeleden(maanden) {
+  if (maanden <= 0) return 'deze maand';
+  if (maanden === 1) return '1 maand geleden';
+  if (maanden < 12) return `${maanden} maanden geleden`;
+  return `${Math.floor(maanden / 12)} jaar geleden`;
+}
+
+export function formatVliegduur(uren) {
+  if (uren < 1.5) return '± 1 uur';
+  return `± ${formatDecimaal(Math.round(uren * 2) / 2)} uur`;
 }

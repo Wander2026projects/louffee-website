@@ -1,8 +1,8 @@
 import { HartIcoon, LogoIcoon, PrijsIcoon, SchildIcoon } from './icons.jsx';
 
 const VOORDELEN = [
-  { icoon: PrijsIcoon, titel: 'Lagere prijzen', tekst: 'Bestemmingen die goedkoper zijn dan normaal' },
-  { icoon: SchildIcoon, titel: 'Weer veilig', tekst: 'Gefilterd op het officiële reisadvies' },
+  { icoon: PrijsIcoon, titel: 'Goedkoop vliegen', tekst: 'We vergelijken vluchten vanaf zes luchthavens' },
+  { icoon: SchildIcoon, titel: 'Weer veilig', tekst: 'Gefilterd op het reisadvies, ook na recente aanslagen' },
   { icoon: HartIcoon, titel: 'Help herstellen', tekst: 'Jouw bezoek steunt de lokale economie' },
 ];
 

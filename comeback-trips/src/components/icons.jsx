@@ -109,3 +109,17 @@ export const KalenderIcoon = (props) => (
     <path d="M4 10h16M9 3v4M15 3v4" />
   </Icoon>
 );
+
+export const VliegtuigIcoon = (props) => (
+  <Icoon {...props}>
+    <path d="M10.5 13.5 4 12l-1 1 5 3 3 5 1-1-1.5-6.5L15 10l4.5-4.5a1.5 1.5 0 0 0-2.1-2.1L13 8l-3.5 3.5Z" />
+  </Icoon>
+);
+
+export const SpaarIcoon = (props) => (
+  <Icoon {...props}>
+    <circle cx="12" cy="12" r="8.5" />
+    <path d="M14.5 9.2A3 3 0 0 0 9.5 11v2a3 3 0 0 0 5 1.8" />
+    <path d="M8 11h4.5M8 13h4.5" />
+  </Icoon>
+);

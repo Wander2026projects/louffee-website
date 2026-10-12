@@ -2,10 +2,225 @@
   "_meta": {
     "voorbeelddata": true,
     "toelichting": "VOORBEELDDATA. De incidenten zijn echt gebeurd, maar reisadviezen, trends, controledata en prijzen zijn schattingen ter illustratie. Controleer altijd het actuele reisadvies op nederlandwereldwijd.nl.",
-    "prijzen": "Indicatie in euro per persoon per week (7 dagen), inclusief retourvlucht en hotel, gebaseerd op vertrek vanaf Schiphol.",
-    "vertrekVanaf": "Luchthavens van waaruit deze reis voor de basisprijs wordt aangeboden. Vanaf andere luchthavens rekent de app een geschatte toeslag."
+    "prijzen": "normalePrijs en huidigePrijs: indicatie in euro per persoon voor 7 dagen, retourvlucht vanaf Schiphol plus hotel.",
+    "vluchtPrijzen": "Indicatie van de huidige retourprijs per persoon per vertrekluchthaven. Ontbreekt een luchthaven, dan wordt de reis daar (vrijwel) niet vanaf aangeboden.",
+    "vliegveld": "IATA-code van het dichtstbijzijnde vliegveld van de bestemming; wordt gebruikt voor de links naar vluchtzoekers.",
+    "vliegduurUren": "Globale reistijd in uren (enkele reis), inclusief een eventuele overstap."
   },
   "bestemmingen": [
+    {
+      "id": "istanbul",
+      "naam": "Istanbul",
+      "land": "Turkije",
+      "regio": "Marmara",
+      "type": ["stad", "cultuur"],
+      "incident": {
+        "omschrijving": "Drie aan IS gelinkte schutters openden het vuur op de politie bij het gebouw van het Israëlische consulaat in zakenwijk Levent. Eén aanvaller kwam om, twee agenten raakten gewond.",
+        "soort": "aanslag",
+        "jaar": 2026,
+        "maand": 4
+      },
+      "reisadvies": "geel",
+      "adviesTrend": "stabiel",
+      "laatstGecontroleerd": "2026-10-06",
+      "normalePrijs": 690,
+      "huidigePrijs": 590,
+      "vluchtPrijzen": {
+        "Schiphol": 190,
+        "Eindhoven": 160,
+        "Rotterdam": 180,
+        "Düsseldorf": 150,
+        "Brussel-Charleroi": 140
+      },
+      "besteReismaanden": [4, 5, 6, 9, 10, 11],
+      "vliegveld": "IST",
+      "vliegduurUren": 3.5,
+      "reisadviesUrl": "https://www.nederlandwereldwijd.nl/reisadvies/turkije"
+    },
+    {
+      "id": "berlijn",
+      "naam": "Berlijn",
+      "land": "Duitsland",
+      "regio": "Berlijn",
+      "type": ["stad", "cultuur"],
+      "incident": {
+        "omschrijving": "Een man reed in het Tiergarten in op bezoekers van de Pride-viering en viel daarna mensen aan met een machete. Eén vrouw kwam om en tientallen raakten gewond; de autoriteiten spreken van een islamitische terreuraanslag.",
+        "soort": "aanslag",
+        "jaar": 2026,
+        "maand": 7
+      },
+      "reisadvies": "groen",
+      "adviesTrend": "stabiel",
+      "laatstGecontroleerd": "2026-10-06",
+      "normalePrijs": 620,
+      "huidigePrijs": 540,
+      "vluchtPrijzen": {
+        "Schiphol": 120,
+        "Düsseldorf": 90
+      },
+      "besteReismaanden": [3, 4, 5, 6, 7, 8, 9, 10, 11, 12],
+      "vliegveld": "BER",
+      "vliegduurUren": 1.5,
+      "reisadviesUrl": "https://www.nederlandwereldwijd.nl/reisadvies/duitsland"
+    },
+    {
+      "id": "manchester",
+      "naam": "Manchester",
+      "land": "Verenigd Koninkrijk",
+      "regio": "Greater Manchester",
+      "type": ["stad", "cultuur"],
+      "incident": {
+        "omschrijving": "Aanslag bij de Heaton Park-synagoge op Jom Kipoer: een man reed in op mensen en stak daarna om zich heen. Twee bezoekers kwamen om.",
+        "soort": "aanslag",
+        "jaar": 2025,
+        "maand": 10
+      },
+      "reisadvies": "groen",
+      "adviesTrend": "stabiel",
+      "laatstGecontroleerd": "2026-10-01",
+      "normalePrijs": 560,
+      "huidigePrijs": 500,
+      "vluchtPrijzen": {
+        "Schiphol": 130,
+        "Eindhoven": 80,
+        "Brussel-Charleroi": 70
+      },
+      "besteReismaanden": [3, 4, 5, 6, 7, 8, 9, 10, 11, 12],
+      "vliegveld": "MAN",
+      "vliegduurUren": 1.2,
+      "reisadviesUrl": "https://www.nederlandwereldwijd.nl/reisadvies/verenigd-koninkrijk"
+    },
+    {
+      "id": "sydney",
+      "naam": "Sydney & Bondi Beach",
+      "land": "Australië",
+      "regio": "New South Wales",
+      "type": ["strand", "stad"],
+      "incident": {
+        "omschrijving": "Schietpartij tijdens een Chanoeka-viering op Bondi Beach waarbij 15 mensen omkwamen. De autoriteiten noemden het een antisemitische terreuraanslag.",
+        "soort": "aanslag",
+        "jaar": 2025,
+        "maand": 12
+      },
+      "reisadvies": "groen",
+      "adviesTrend": "stabiel",
+      "laatstGecontroleerd": "2026-09-28",
+      "normalePrijs": 2300,
+      "huidigePrijs": 1950,
+      "vluchtPrijzen": {
+        "Schiphol": 1150,
+        "Düsseldorf": 1100
+      },
+      "besteReismaanden": [3, 4, 5, 9, 10, 11],
+      "vliegveld": "SYD",
+      "vliegduurUren": 22,
+      "reisadviesUrl": "https://www.nederlandwereldwijd.nl/reisadvies/australie"
+    },
+    {
+      "id": "delhi-agra",
+      "naam": "Delhi & Agra",
+      "land": "India",
+      "regio": "Delhi & Uttar Pradesh",
+      "type": ["cultuur", "stad"],
+      "incident": {
+        "omschrijving": "Bomaanslag met een auto vlak bij het Rode Fort in Oud-Delhi, waarbij zeker 15 mensen omkwamen. Hotels meldden daarna veel annuleringen.",
+        "soort": "aanslag",
+        "jaar": 2025,
+        "maand": 11
+      },
+      "reisadvies": "geel",
+      "adviesTrend": "stabiel",
+      "laatstGecontroleerd": "2026-09-28",
+      "normalePrijs": 1250,
+      "huidigePrijs": 950,
+      "vluchtPrijzen": {
+        "Schiphol": 560,
+        "Düsseldorf": 540
+      },
+      "besteReismaanden": [1, 2, 3, 10, 11, 12],
+      "vliegveld": "DEL",
+      "vliegduurUren": 8.5,
+      "reisadviesUrl": "https://www.nederlandwereldwijd.nl/reisadvies/india"
+    },
+    {
+      "id": "mexico-stad",
+      "naam": "Mexico-Stad & Teotihuacan",
+      "land": "Mexico",
+      "regio": "Mexico-Stad",
+      "type": ["cultuur", "stad"],
+      "incident": {
+        "omschrijving": "Een schutter opende vanaf de Maanpiramide in Teotihuacan het vuur op bezoekers. Een Canadese toerist kwam om en meer dan tien mensen raakten gewond.",
+        "soort": "aanslag",
+        "jaar": 2026,
+        "maand": 4
+      },
+      "reisadvies": "geel",
+      "adviesTrend": "stabiel",
+      "laatstGecontroleerd": "2026-09-21",
+      "normalePrijs": 1500,
+      "huidigePrijs": 1190,
+      "vluchtPrijzen": {
+        "Schiphol": 720,
+        "Düsseldorf": 700
+      },
+      "besteReismaanden": [1, 2, 3, 4, 11, 12],
+      "vliegveld": "MEX",
+      "vliegduurUren": 12,
+      "reisadviesUrl": "https://www.nederlandwereldwijd.nl/reisadvies/mexico"
+    },
+    {
+      "id": "petra",
+      "naam": "Petra",
+      "land": "Jordanië",
+      "regio": "Ma’an",
+      "type": ["cultuur", "natuur"],
+      "incident": {
+        "omschrijving": "Door hernieuwde Iraanse aanvallen in het Midden-Oosten ging het reisadvies voor heel Jordanië in juli tijdelijk naar oranje. Toeristen bleven massaal weg; sinds september geldt voor het grootste deel van het land weer geel.",
+        "soort": "conflict",
+        "jaar": 2026,
+        "maand": 7
+      },
+      "reisadvies": "geel",
+      "adviesTrend": "verbeterd",
+      "laatstGecontroleerd": "2026-10-07",
+      "normalePrijs": 1150,
+      "huidigePrijs": 690,
+      "vluchtPrijzen": {
+        "Schiphol": 360,
+        "Eindhoven": 260,
+        "Brussel-Charleroi": 220
+      },
+      "besteReismaanden": [3, 4, 5, 10, 11],
+      "vliegveld": "AMM",
+      "vliegduurUren": 4.5,
+      "reisadviesUrl": "https://www.nederlandwereldwijd.nl/reisadvies/jordanie"
+    },
+    {
+      "id": "aqaba",
+      "naam": "Aqaba & Wadi Rum",
+      "land": "Jordanië",
+      "regio": "Aqaba",
+      "type": ["strand", "natuur"],
+      "incident": {
+        "omschrijving": "Door hernieuwde Iraanse aanvallen in het Midden-Oosten ging het reisadvies voor Jordanië in juli naar oranje. Voor de regio Aqaba is dat zo gebleven.",
+        "soort": "conflict",
+        "jaar": 2026,
+        "maand": 7
+      },
+      "reisadvies": "oranje",
+      "adviesTrend": "stabiel",
+      "laatstGecontroleerd": "2026-10-07",
+      "normalePrijs": 1050,
+      "huidigePrijs": 600,
+      "vluchtPrijzen": {
+        "Schiphol": 380,
+        "Brussel-Charleroi": 240
+      },
+      "besteReismaanden": [3, 4, 5, 10, 11],
+      "vliegveld": "AQJ",
+      "vliegduurUren": 5,
+      "reisadviesUrl": "https://www.nederlandwereldwijd.nl/reisadvies/jordanie"
+    },
     {
       "id": "sharm-el-sheikh",
       "naam": "Sharm el-Sheikh",
@@ -14,15 +229,23 @@
       "type": ["strand", "natuur"],
       "incident": {
         "omschrijving": "Bomaanslag op Metrojet-vlucht 9268 kort na vertrek uit Sharm el-Sheikh. Veel Europese landen schortten daarna jarenlang vluchten op.",
-        "jaar": 2015
+        "soort": "aanslag",
+        "jaar": 2015,
+        "maand": 10
       },
       "reisadvies": "geel",
-      "adviesTrend": "verbeterd",
+      "adviesTrend": "stabiel",
       "laatstGecontroleerd": "2026-09-30",
       "normalePrijs": 980,
       "huidigePrijs": 640,
+      "vluchtPrijzen": {
+        "Schiphol": 330,
+        "Eindhoven": 300,
+        "Düsseldorf": 290
+      },
       "besteReismaanden": [1, 2, 3, 4, 5, 10, 11, 12],
-      "vertrekVanaf": ["Schiphol", "Eindhoven"],
+      "vliegveld": "SSH",
+      "vliegduurUren": 5,
       "reisadviesUrl": "https://www.nederlandwereldwijd.nl/reisadvies/egypte"
     },
     {
@@ -33,15 +256,24 @@
       "type": ["strand"],
       "incident": {
         "omschrijving": "Terroristische aanslag op het strand bij een hotel in Port El Kantaoui, waarbij 38 toeristen omkwamen.",
-        "jaar": 2015
+        "soort": "aanslag",
+        "jaar": 2015,
+        "maand": 6
       },
       "reisadvies": "geel",
       "adviesTrend": "verbeterd",
       "laatstGecontroleerd": "2026-09-24",
       "normalePrijs": 840,
       "huidigePrijs": 560,
+      "vluchtPrijzen": {
+        "Schiphol": 260,
+        "Eindhoven": 240,
+        "Rotterdam": 250,
+        "Düsseldorf": 230
+      },
       "besteReismaanden": [5, 6, 7, 8, 9, 10],
-      "vertrekVanaf": ["Schiphol", "Eindhoven", "Rotterdam"],
+      "vliegveld": "NBE",
+      "vliegduurUren": 3,
       "reisadviesUrl": "https://www.nederlandwereldwijd.nl/reisadvies/tunesie"
     },
     {
@@ -52,35 +284,24 @@
       "type": ["strand", "cultuur"],
       "incident": {
         "omschrijving": "Aanslag bij de eeuwenoude La Ghriba-synagoge tijdens de jaarlijkse pelgrimstocht.",
-        "jaar": 2023
+        "soort": "aanslag",
+        "jaar": 2023,
+        "maand": 5
       },
       "reisadvies": "geel",
       "adviesTrend": "stabiel",
       "laatstGecontroleerd": "2026-09-24",
       "normalePrijs": 790,
       "huidigePrijs": 610,
-      "besteReismaanden": [4, 5, 6, 9, 10],
-      "vertrekVanaf": ["Schiphol", "Eindhoven"],
-      "reisadviesUrl": "https://www.nederlandwereldwijd.nl/reisadvies/tunesie"
-    },
-    {
-      "id": "istanbul",
-      "naam": "Istanbul",
-      "land": "Turkije",
-      "regio": "Marmara",
-      "type": ["stad", "cultuur"],
-      "incident": {
-        "omschrijving": "Bomaanslag in de drukke winkelstraat İstiklal Caddesi in het centrum van de stad.",
-        "jaar": 2022
+      "vluchtPrijzen": {
+        "Schiphol": 290,
+        "Eindhoven": 270,
+        "Düsseldorf": 260
       },
-      "reisadvies": "geel",
-      "adviesTrend": "stabiel",
-      "laatstGecontroleerd": "2026-10-02",
-      "normalePrijs": 690,
-      "huidigePrijs": 610,
-      "besteReismaanden": [4, 5, 6, 9, 10, 11],
-      "vertrekVanaf": ["Schiphol", "Eindhoven"],
-      "reisadviesUrl": "https://www.nederlandwereldwijd.nl/reisadvies/turkije"
+      "besteReismaanden": [4, 5, 6, 9, 10],
+      "vliegveld": "DJE",
+      "vliegduurUren": 3,
+      "reisadviesUrl": "https://www.nederlandwereldwijd.nl/reisadvies/tunesie"
     },
     {
       "id": "antakya",
@@ -90,15 +311,22 @@
       "type": ["stad", "cultuur"],
       "incident": {
         "omschrijving": "Zware aardbeving in Zuidoost-Turkije en Noord-Syrië. De historische binnenstad van Antakya werd grotendeels verwoest en wordt nu herbouwd.",
-        "jaar": 2023
+        "soort": "natuurramp",
+        "jaar": 2023,
+        "maand": 2
       },
-      "reisadvies": "oranje",
+      "reisadvies": "geel",
       "adviesTrend": "verbeterd",
-      "laatstGecontroleerd": "2026-10-02",
+      "laatstGecontroleerd": "2026-10-06",
       "normalePrijs": 760,
       "huidigePrijs": 430,
+      "vluchtPrijzen": {
+        "Schiphol": 230,
+        "Düsseldorf": 210
+      },
       "besteReismaanden": [3, 4, 5, 10, 11],
-      "vertrekVanaf": ["Schiphol"],
+      "vliegveld": "HTY",
+      "vliegduurUren": 6,
       "reisadviesUrl": "https://www.nederlandwereldwijd.nl/reisadvies/turkije"
     },
     {
@@ -109,15 +337,26 @@
       "type": ["stad", "cultuur"],
       "incident": {
         "omschrijving": "Krachtige aardbeving in het Atlasgebergte, ook voelbaar in Marrakesh, waar delen van de oude medina beschadigd raakten.",
-        "jaar": 2023
+        "soort": "natuurramp",
+        "jaar": 2023,
+        "maand": 9
       },
       "reisadvies": "geel",
       "adviesTrend": "verbeterd",
       "laatstGecontroleerd": "2026-09-18",
       "normalePrijs": 720,
       "huidigePrijs": 560,
+      "vluchtPrijzen": {
+        "Schiphol": 190,
+        "Eindhoven": 120,
+        "Rotterdam": 160,
+        "Weeze": 100,
+        "Düsseldorf": 140,
+        "Brussel-Charleroi": 90
+      },
       "besteReismaanden": [3, 4, 5, 10, 11],
-      "vertrekVanaf": ["Schiphol", "Eindhoven", "Rotterdam"],
+      "vliegveld": "RAK",
+      "vliegduurUren": 3.5,
       "reisadviesUrl": "https://www.nederlandwereldwijd.nl/reisadvies/marokko"
     },
     {
@@ -128,15 +367,26 @@
       "type": ["natuur", "cultuur"],
       "incident": {
         "omschrijving": "Het epicentrum van de aardbeving van september 2023 lag in deze regio; veel Berberdorpen in de bergen werden zwaar getroffen.",
-        "jaar": 2023
+        "soort": "natuurramp",
+        "jaar": 2023,
+        "maand": 9
       },
       "reisadvies": "geel",
       "adviesTrend": "verbeterd",
       "laatstGecontroleerd": "2026-09-18",
       "normalePrijs": 780,
       "huidigePrijs": 540,
+      "vluchtPrijzen": {
+        "Schiphol": 190,
+        "Eindhoven": 120,
+        "Rotterdam": 160,
+        "Weeze": 100,
+        "Düsseldorf": 140,
+        "Brussel-Charleroi": 90
+      },
       "besteReismaanden": [4, 5, 6, 9, 10],
-      "vertrekVanaf": ["Schiphol", "Eindhoven", "Rotterdam"],
+      "vliegveld": "RAK",
+      "vliegduurUren": 3.5,
       "reisadviesUrl": "https://www.nederlandwereldwijd.nl/reisadvies/marokko"
     },
     {
@@ -147,15 +397,22 @@
       "type": ["natuur", "cultuur"],
       "incident": {
         "omschrijving": "Landelijke, gewelddadige jongerenprotesten (de ‘Gen Z-protesten’), vooral in Kathmandu, leidden tot tientallen doden en de val van de regering.",
-        "jaar": 2025
+        "soort": "onrust",
+        "jaar": 2025,
+        "maand": 9
       },
       "reisadvies": "geel",
       "adviesTrend": "verbeterd",
       "laatstGecontroleerd": "2026-09-27",
       "normalePrijs": 1450,
       "huidigePrijs": 1090,
+      "vluchtPrijzen": {
+        "Schiphol": 720,
+        "Düsseldorf": 690
+      },
       "besteReismaanden": [3, 4, 10, 11],
-      "vertrekVanaf": ["Schiphol"],
+      "vliegveld": "KTM",
+      "vliegduurUren": 14,
       "reisadviesUrl": "https://www.nederlandwereldwijd.nl/reisadvies/nepal"
     },
     {
@@ -166,15 +423,22 @@
       "type": ["strand", "natuur"],
       "incident": {
         "omschrijving": "Een reeks zware aardbevingen trof het eiland; vooral het noorden van Lombok en de Gili-eilanden liepen veel schade op.",
-        "jaar": 2018
+        "soort": "natuurramp",
+        "jaar": 2018,
+        "maand": 8
       },
       "reisadvies": "geel",
       "adviesTrend": "stabiel",
       "laatstGecontroleerd": "2026-09-12",
       "normalePrijs": 1480,
       "huidigePrijs": 1150,
+      "vluchtPrijzen": {
+        "Schiphol": 820,
+        "Düsseldorf": 800
+      },
       "besteReismaanden": [5, 6, 7, 8, 9],
-      "vertrekVanaf": ["Schiphol"],
+      "vliegveld": "LOP",
+      "vliegduurUren": 18,
       "reisadviesUrl": "https://www.nederlandwereldwijd.nl/reisadvies/indonesie"
     },
     {
@@ -185,15 +449,22 @@
       "type": ["strand", "cultuur"],
       "incident": {
         "omschrijving": "Paaszondag-aanslagen op kerken en luxehotels in onder meer Colombo en Negombo.",
-        "jaar": 2019
+        "soort": "aanslag",
+        "jaar": 2019,
+        "maand": 4
       },
       "reisadvies": "geel",
       "adviesTrend": "verbeterd",
       "laatstGecontroleerd": "2026-10-05",
       "normalePrijs": 1390,
       "huidigePrijs": 990,
+      "vluchtPrijzen": {
+        "Schiphol": 640,
+        "Düsseldorf": 610
+      },
       "besteReismaanden": [1, 2, 3, 4, 12],
-      "vertrekVanaf": ["Schiphol"],
+      "vliegveld": "CMB",
+      "vliegduurUren": 12,
       "reisadviesUrl": "https://www.nederlandwereldwijd.nl/reisadvies/sri-lanka"
     },
     {
@@ -204,35 +475,23 @@
       "type": ["natuur", "cultuur"],
       "incident": {
         "omschrijving": "Zware economische crisis met brandstoftekorten en massale protesten, die leidden tot het aftreden van de president.",
-        "jaar": 2022
+        "soort": "onrust",
+        "jaar": 2022,
+        "maand": 7
       },
       "reisadvies": "geel",
       "adviesTrend": "verbeterd",
       "laatstGecontroleerd": "2026-10-05",
       "normalePrijs": 1290,
       "huidigePrijs": 920,
-      "besteReismaanden": [1, 2, 3, 4, 8],
-      "vertrekVanaf": ["Schiphol"],
-      "reisadviesUrl": "https://www.nederlandwereldwijd.nl/reisadvies/sri-lanka"
-    },
-    {
-      "id": "petra",
-      "naam": "Petra & Wadi Rum",
-      "land": "Jordanië",
-      "regio": "Zuid-Jordanië",
-      "type": ["cultuur", "natuur"],
-      "incident": {
-        "omschrijving": "De oorlog in het nabijgelegen Gaza zorgde voor massale annuleringen in de hele regio; het aantal bezoekers aan Petra kelderde.",
-        "jaar": 2023
+      "vluchtPrijzen": {
+        "Schiphol": 640,
+        "Düsseldorf": 610
       },
-      "reisadvies": "geel",
-      "adviesTrend": "stabiel",
-      "laatstGecontroleerd": "2026-10-07",
-      "normalePrijs": 1150,
-      "huidigePrijs": 720,
-      "besteReismaanden": [3, 4, 5, 10, 11],
-      "vertrekVanaf": ["Schiphol", "Eindhoven"],
-      "reisadviesUrl": "https://www.nederlandwereldwijd.nl/reisadvies/jordanie"
+      "besteReismaanden": [1, 2, 3, 4, 8],
+      "vliegveld": "CMB",
+      "vliegduurUren": 12,
+      "reisadviesUrl": "https://www.nederlandwereldwijd.nl/reisadvies/sri-lanka"
     },
     {
       "id": "cusco",
@@ -242,15 +501,21 @@
       "type": ["cultuur", "natuur"],
       "incident": {
         "omschrijving": "Landelijke onrust na de afzetting van president Castillo; Machu Picchu ging tijdelijk dicht en het treinverkeer lag stil.",
-        "jaar": 2023
+        "soort": "onrust",
+        "jaar": 2023,
+        "maand": 1
       },
       "reisadvies": "geel",
       "adviesTrend": "verbeterd",
       "laatstGecontroleerd": "2026-09-21",
       "normalePrijs": 1750,
       "huidigePrijs": 1340,
+      "vluchtPrijzen": {
+        "Schiphol": 980
+      },
       "besteReismaanden": [5, 6, 7, 8, 9],
-      "vertrekVanaf": ["Schiphol"],
+      "vliegveld": "CUZ",
+      "vliegduurUren": 17,
       "reisadviesUrl": "https://www.nederlandwereldwijd.nl/reisadvies/peru"
     },
     {
@@ -261,15 +526,22 @@
       "type": ["strand", "natuur"],
       "incident": {
         "omschrijving": "Supertyfoon Rai (Odette) veroorzaakte grote schade aan woningen, resorts en infrastructuur op het eiland.",
-        "jaar": 2021
+        "soort": "natuurramp",
+        "jaar": 2021,
+        "maand": 12
       },
       "reisadvies": "geel",
       "adviesTrend": "stabiel",
       "laatstGecontroleerd": "2026-09-15",
       "normalePrijs": 1520,
       "huidigePrijs": 1190,
+      "vluchtPrijzen": {
+        "Schiphol": 860,
+        "Düsseldorf": 840
+      },
       "besteReismaanden": [1, 2, 3, 4, 5],
-      "vertrekVanaf": ["Schiphol"],
+      "vliegveld": "TAG",
+      "vliegduurUren": 18,
       "reisadviesUrl": "https://www.nederlandwereldwijd.nl/reisadvies/filipijnen"
     },
     {
@@ -280,15 +552,21 @@
       "type": ["natuur"],
       "incident": {
         "omschrijving": "Gewelddadige protesten in Nairobi tegen een nieuwe belastingwet; demonstranten drongen het parlementsgebouw binnen.",
-        "jaar": 2024
+        "soort": "onrust",
+        "jaar": 2024,
+        "maand": 6
       },
       "reisadvies": "geel",
       "adviesTrend": "stabiel",
       "laatstGecontroleerd": "2026-09-29",
       "normalePrijs": 2150,
       "huidigePrijs": 1780,
+      "vluchtPrijzen": {
+        "Schiphol": 620
+      },
       "besteReismaanden": [1, 2, 7, 8, 9, 10],
-      "vertrekVanaf": ["Schiphol"],
+      "vliegveld": "NBO",
+      "vliegduurUren": 8.5,
       "reisadviesUrl": "https://www.nederlandwereldwijd.nl/reisadvies/kenia"
     },
     {
@@ -299,15 +577,21 @@
       "type": ["strand", "cultuur"],
       "incident": {
         "omschrijving": "Aanvallen door terreurgroep al-Shabaab op het vasteland van Lamu County, onder meer in Mpeketoni.",
-        "jaar": 2014
+        "soort": "aanslag",
+        "jaar": 2014,
+        "maand": 6
       },
       "reisadvies": "oranje",
       "adviesTrend": "stabiel",
       "laatstGecontroleerd": "2026-09-29",
       "normalePrijs": 1550,
       "huidigePrijs": 980,
+      "vluchtPrijzen": {
+        "Schiphol": 680
+      },
       "besteReismaanden": [1, 2, 3, 8, 9, 10],
-      "vertrekVanaf": ["Schiphol"],
+      "vliegveld": "LAU",
+      "vliegduurUren": 12,
       "reisadviesUrl": "https://www.nederlandwereldwijd.nl/reisadvies/kenia"
     },
     {
@@ -318,15 +602,21 @@
       "type": ["strand", "stad"],
       "incident": {
         "omschrijving": "Orkaan Otis (categorie 5) raasde over Acapulco en beschadigde vrijwel alle hotels rond de baai.",
-        "jaar": 2023
+        "soort": "natuurramp",
+        "jaar": 2023,
+        "maand": 10
       },
       "reisadvies": "oranje",
       "adviesTrend": "stabiel",
-      "laatstGecontroleerd": "2026-09-09",
+      "laatstGecontroleerd": "2026-09-21",
       "normalePrijs": 1600,
       "huidigePrijs": 1050,
+      "vluchtPrijzen": {
+        "Schiphol": 780
+      },
       "besteReismaanden": [1, 2, 3, 4, 11, 12],
-      "vertrekVanaf": ["Schiphol"],
+      "vliegveld": "ACA",
+      "vliegduurUren": 15,
       "reisadviesUrl": "https://www.nederlandwereldwijd.nl/reisadvies/mexico"
     },
     {
@@ -337,15 +627,26 @@
       "type": ["stad", "strand"],
       "incident": {
         "omschrijving": "Extreme regenval (DANA) veroorzaakte dodelijke overstromingen in de zuidelijke voorsteden van Valencia.",
-        "jaar": 2024
+        "soort": "natuurramp",
+        "jaar": 2024,
+        "maand": 10
       },
       "reisadvies": "groen",
       "adviesTrend": "verbeterd",
       "laatstGecontroleerd": "2026-10-08",
       "normalePrijs": 690,
       "huidigePrijs": 590,
+      "vluchtPrijzen": {
+        "Schiphol": 150,
+        "Eindhoven": 90,
+        "Rotterdam": 130,
+        "Weeze": 70,
+        "Düsseldorf": 120,
+        "Brussel-Charleroi": 80
+      },
       "besteReismaanden": [3, 4, 5, 6, 9, 10],
-      "vertrekVanaf": ["Schiphol", "Eindhoven", "Rotterdam"],
+      "vliegveld": "VLC",
+      "vliegduurUren": 2.5,
       "reisadviesUrl": "https://www.nederlandwereldwijd.nl/reisadvies/spanje"
     },
     {
@@ -356,15 +657,22 @@
       "type": ["natuur"],
       "incident": {
         "omschrijving": "Drie maanden durende uitbarsting van de vulkaan Cumbre Vieja; lavastromen verwoestten duizenden gebouwen.",
-        "jaar": 2021
+        "soort": "natuurramp",
+        "jaar": 2021,
+        "maand": 9
       },
       "reisadvies": "groen",
       "adviesTrend": "verbeterd",
       "laatstGecontroleerd": "2026-10-08",
       "normalePrijs": 890,
       "huidigePrijs": 690,
+      "vluchtPrijzen": {
+        "Schiphol": 330,
+        "Düsseldorf": 280
+      },
       "besteReismaanden": [1, 2, 3, 4, 5, 6, 9, 10, 11, 12],
-      "vertrekVanaf": ["Schiphol"],
+      "vliegveld": "SPC",
+      "vliegduurUren": 4.5,
       "reisadviesUrl": "https://www.nederlandwereldwijd.nl/reisadvies/spanje"
     },
     {
@@ -375,15 +683,25 @@
       "type": ["strand", "cultuur"],
       "incident": {
         "omschrijving": "Grote bosbranden in het zuiden van het eiland; tienduizenden toeristen en bewoners werden geëvacueerd.",
-        "jaar": 2023
+        "soort": "natuurramp",
+        "jaar": 2023,
+        "maand": 7
       },
       "reisadvies": "groen",
       "adviesTrend": "stabiel",
       "laatstGecontroleerd": "2026-09-26",
       "normalePrijs": 840,
       "huidigePrijs": 680,
+      "vluchtPrijzen": {
+        "Schiphol": 260,
+        "Eindhoven": 220,
+        "Rotterdam": 240,
+        "Weeze": 190,
+        "Düsseldorf": 210
+      },
       "besteReismaanden": [5, 6, 9, 10],
-      "vertrekVanaf": ["Schiphol", "Eindhoven", "Rotterdam"],
+      "vliegveld": "RHO",
+      "vliegduurUren": 3.5,
       "reisadviesUrl": "https://www.nederlandwereldwijd.nl/reisadvies/griekenland"
     },
     {
@@ -394,15 +712,24 @@
       "type": ["natuur", "strand"],
       "incident": {
         "omschrijving": "Verwoestende bosbranden legden een groot deel van de bossen in het noorden van het eiland in de as.",
-        "jaar": 2021
+        "soort": "natuurramp",
+        "jaar": 2021,
+        "maand": 8
       },
       "reisadvies": "groen",
       "adviesTrend": "verbeterd",
       "laatstGecontroleerd": "2026-09-26",
       "normalePrijs": 720,
       "huidigePrijs": 540,
+      "vluchtPrijzen": {
+        "Schiphol": 200,
+        "Eindhoven": 150,
+        "Düsseldorf": 170,
+        "Brussel-Charleroi": 120
+      },
       "besteReismaanden": [5, 6, 7, 9, 10],
-      "vertrekVanaf": ["Schiphol", "Eindhoven"],
+      "vliegveld": "ATH",
+      "vliegduurUren": 3.5,
       "reisadviesUrl": "https://www.nederlandwereldwijd.nl/reisadvies/griekenland"
     },
     {
@@ -413,15 +740,23 @@
       "type": ["natuur", "cultuur"],
       "incident": {
         "omschrijving": "Een reeks aardbevingen in Midden-Italië trof onder meer de stadjes Amatrice en Norcia.",
-        "jaar": 2016
+        "soort": "natuurramp",
+        "jaar": 2016,
+        "maand": 10
       },
       "reisadvies": "groen",
       "adviesTrend": "stabiel",
       "laatstGecontroleerd": "2026-09-03",
       "normalePrijs": 780,
       "huidigePrijs": 650,
+      "vluchtPrijzen": {
+        "Schiphol": 190,
+        "Eindhoven": 120,
+        "Brussel-Charleroi": 90
+      },
       "besteReismaanden": [4, 5, 6, 9, 10],
-      "vertrekVanaf": ["Schiphol", "Eindhoven"],
+      "vliegveld": "PEG",
+      "vliegduurUren": 2,
       "reisadviesUrl": "https://www.nederlandwereldwijd.nl/reisadvies/italie"
     },
     {
@@ -432,15 +767,23 @@
       "type": ["stad", "cultuur"],
       "incident": {
         "omschrijving": "Aardbeving beschadigde de historische binnenstad, waaronder de kathedraal en het parlementsgebouw.",
-        "jaar": 2020
+        "soort": "natuurramp",
+        "jaar": 2020,
+        "maand": 3
       },
       "reisadvies": "groen",
       "adviesTrend": "verbeterd",
       "laatstGecontroleerd": "2026-09-03",
       "normalePrijs": 560,
       "huidigePrijs": 480,
+      "vluchtPrijzen": {
+        "Schiphol": 170,
+        "Eindhoven": 110,
+        "Brussel-Charleroi": 80
+      },
       "besteReismaanden": [4, 5, 6, 9, 10, 12],
-      "vertrekVanaf": ["Schiphol", "Eindhoven"],
+      "vliegveld": "ZAG",
+      "vliegduurUren": 2,
       "reisadviesUrl": "https://www.nederlandwereldwijd.nl/reisadvies/kroatie"
     },
     {
@@ -451,15 +794,23 @@
       "type": ["natuur"],
       "incident": {
         "omschrijving": "Langdurige bosbranden in het bergachtige binnenland; populaire wandelpaden waren tijdelijk gesloten.",
-        "jaar": 2024
+        "soort": "natuurramp",
+        "jaar": 2024,
+        "maand": 8
       },
       "reisadvies": "groen",
       "adviesTrend": "stabiel",
       "laatstGecontroleerd": "2026-09-19",
       "normalePrijs": 870,
       "huidigePrijs": 760,
+      "vluchtPrijzen": {
+        "Schiphol": 300,
+        "Rotterdam": 280,
+        "Düsseldorf": 260
+      },
       "besteReismaanden": [3, 4, 5, 6, 9, 10],
-      "vertrekVanaf": ["Schiphol", "Rotterdam"],
+      "vliegveld": "FNC",
+      "vliegduurUren": 4,
       "reisadviesUrl": "https://www.nederlandwereldwijd.nl/reisadvies/portugal"
     },
     {
@@ -470,15 +821,25 @@
       "type": ["stad", "strand"],
       "incident": {
         "omschrijving": "Aanslag met een vrachtwagen op de Promenade des Anglais tijdens de viering van de Franse nationale feestdag.",
-        "jaar": 2016
+        "soort": "aanslag",
+        "jaar": 2016,
+        "maand": 7
       },
       "reisadvies": "groen",
       "adviesTrend": "stabiel",
       "laatstGecontroleerd": "2026-09-19",
       "normalePrijs": 820,
       "huidigePrijs": 740,
+      "vluchtPrijzen": {
+        "Schiphol": 180,
+        "Eindhoven": 140,
+        "Rotterdam": 160,
+        "Düsseldorf": 150,
+        "Brussel-Charleroi": 110
+      },
       "besteReismaanden": [5, 6, 9, 10],
-      "vertrekVanaf": ["Schiphol", "Eindhoven", "Rotterdam"],
+      "vliegveld": "NCE",
+      "vliegduurUren": 2,
       "reisadviesUrl": "https://www.nederlandwereldwijd.nl/reisadvies/frankrijk"
     },
     {
@@ -488,16 +849,22 @@
       "regio": "Beiroet",
       "type": ["stad", "cultuur"],
       "incident": {
-        "omschrijving": "Enorme explosie in de haven van Beiroet die grote delen van de stad verwoestte.",
-        "jaar": 2020
+        "omschrijving": "Oorlog tussen Israël en Hezbollah, met luchtaanvallen op de zuidelijke wijken van Beiroet.",
+        "soort": "conflict",
+        "jaar": 2024,
+        "maand": 9
       },
       "reisadvies": "rood",
       "adviesTrend": "stabiel",
       "laatstGecontroleerd": "2026-10-07",
       "normalePrijs": 900,
       "huidigePrijs": 520,
+      "vluchtPrijzen": {
+        "Schiphol": 320
+      },
       "besteReismaanden": [4, 5, 10],
-      "vertrekVanaf": ["Schiphol"],
+      "vliegveld": "BEY",
+      "vliegduurUren": 4.5,
       "reisadviesUrl": "https://www.nederlandwereldwijd.nl/reisadvies/libanon"
     },
     {
@@ -508,15 +875,21 @@
       "type": ["cultuur"],
       "incident": {
         "omschrijving": "Militaire staatsgreep, gevolgd door een aanhoudend gewapend conflict in grote delen van het land.",
-        "jaar": 2021
+        "soort": "conflict",
+        "jaar": 2021,
+        "maand": 2
       },
       "reisadvies": "rood",
       "adviesTrend": "stabiel",
       "laatstGecontroleerd": "2026-10-07",
       "normalePrijs": 1400,
       "huidigePrijs": 900,
+      "vluchtPrijzen": {
+        "Schiphol": 760
+      },
       "besteReismaanden": [1, 2, 11, 12],
-      "vertrekVanaf": ["Schiphol"],
+      "vliegveld": "NYU",
+      "vliegduurUren": 16,
       "reisadviesUrl": "https://www.nederlandwereldwijd.nl/reisadvies/myanmar"
     }
   ]

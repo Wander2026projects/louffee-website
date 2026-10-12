@@ -1,8 +1,11 @@
+import { useState } from 'react';
 import {
+  INCIDENTSOORTEN,
   LUCHTHAVENS,
   MAANDEN,
   MAX_DAGEN,
   MIN_DAGEN,
+  RECENTHEID,
   VAKANTIETYPES,
   VEILIGHEIDSNIVEAUS,
 } from '../lib/constants.js';
@@ -26,13 +29,30 @@ function Veld({ label, htmlFor, hint, children }) {
   );
 }
 
-function Groep({ legend, hint, children }) {
+function Groep({ legend, hint, fout, children }) {
   return (
     <fieldset>
       <legend className="text-sm font-medium text-slate-800">{legend}</legend>
       <div className="mt-1.5">{children}</div>
-      {hint && <p className="mt-1.5 text-xs text-slate-500">{hint}</p>}
+      {fout && <p className="mt-1.5 text-xs font-medium text-rose-600">{fout}</p>}
+      {hint && !fout && <p className="mt-1.5 text-xs text-slate-500">{hint}</p>}
     </fieldset>
+  );
+}
+
+/** Aanvink-knop in chipvorm, gebruikt voor luchthavens, vakantietypes en soorten incidenten. */
+function Keuzechip({ checked, onChange, children }) {
+  return (
+    <label className="relative">
+      <input type="checkbox" checked={checked} onChange={onChange} className="peer sr-only" />
+      <span
+        className="flex h-full cursor-pointer items-center gap-2 rounded-lg border border-stone-300 px-3 py-2.5 text-sm font-medium text-slate-700 transition
+          hover:border-stone-400 peer-checked:border-teal-600 peer-checked:bg-teal-50 peer-checked:text-teal-900
+          peer-focus-visible:ring-2 peer-focus-visible:ring-teal-600"
+      >
+        {children}
+      </span>
+    </label>
   );
 }
 
@@ -40,14 +60,21 @@ const invoerStijl =
   'block w-full rounded-lg border border-stone-300 bg-white px-3 py-2.5 text-slate-900 shadow-xs ' +
   'focus:border-teal-600 focus:outline-none focus:ring-2 focus:ring-teal-600/20';
 
+const NL_LUCHTHAVENS = LUCHTHAVENS.filter((l) => !l.buitenland);
+const BUITENLANDSE_LUCHTHAVENS = LUCHTHAVENS.filter((l) => l.buitenland);
+
 export default function SearchForm({ waarden, fouten, onChange, onSubmit }) {
+  const [toonBuitenland, setToonBuitenland] = useState(() =>
+    BUITENLANDSE_LUCHTHAVENS.some((l) => waarden.luchthavens.includes(l.id)),
+  );
+
   const zet = (veld) => (waarde) => onChange({ ...waarden, [veld]: waarde });
 
-  const wisselType = (type) => {
-    const types = waarden.types.includes(type)
-      ? waarden.types.filter((t) => t !== type)
-      : [...waarden.types, type];
-    onChange({ ...waarden, types });
+  const wissel = (veld, id) => {
+    const lijst = waarden[veld].includes(id)
+      ? waarden[veld].filter((x) => x !== id)
+      : [...waarden[veld], id];
+    onChange({ ...waarden, [veld]: lijst });
   };
 
   const handleSubmit = (event) => {
@@ -67,7 +94,7 @@ export default function SearchForm({ waarden, fouten, onChange, onSubmit }) {
         <p className="mt-1 text-sm text-slate-500">Vul in en wij zoeken de beste deals.</p>
       </div>
 
-      <Veld label="Budget per persoon" htmlFor="budget" hint="Voor vlucht en hotel samen.">
+      <Veld label="Budget per persoon" htmlFor="budget" hint="Voor vlucht en verblijf samen.">
         <div className="relative">
           <span className="pointer-events-none absolute inset-y-0 left-3 flex items-center text-slate-500">
             €
@@ -93,28 +120,50 @@ export default function SearchForm({ waarden, fouten, onChange, onSubmit }) {
         )}
       </Veld>
 
-      <Groep legend="Vertrekluchthaven">
-        <div className="grid grid-cols-3 gap-1 rounded-lg bg-stone-100 p-1">
-          {LUCHTHAVENS.map((luchthaven) => (
-            <label key={luchthaven} className="relative">
-              <input
-                type="radio"
-                name="luchthaven"
-                value={luchthaven}
-                checked={waarden.luchthaven === luchthaven}
-                onChange={() => zet('luchthaven')(luchthaven)}
-                className="peer sr-only"
-              />
-              <span
-                className="block cursor-pointer rounded-md px-2 py-2 text-center text-sm font-medium text-slate-600 transition
-                  hover:text-slate-900 peer-checked:bg-white peer-checked:text-teal-800 peer-checked:shadow-sm
-                  peer-focus-visible:ring-2 peer-focus-visible:ring-teal-600"
-              >
-                {luchthaven}
-              </span>
-            </label>
+      <Groep
+        legend="Vertrekken vanaf"
+        hint="We kiezen per bestemming automatisch de goedkoopste vlucht."
+        fout={fouten.luchthavens}
+      >
+        <div className="grid grid-cols-3 gap-2">
+          {NL_LUCHTHAVENS.map(({ id, label }) => (
+            <Keuzechip key={id} checked={waarden.luchthavens.includes(id)} onChange={() => wissel('luchthavens', id)}>
+              <span className="w-full text-center">{label}</span>
+            </Keuzechip>
           ))}
         </div>
+
+        {toonBuitenland ? (
+          <div className="mt-3 rounded-lg bg-stone-50 p-3 ring-1 ring-inset ring-stone-200">
+            <p className="text-xs font-medium text-slate-600">Over de grens, vaak goedkoper</p>
+            <div className="mt-2 grid grid-cols-3 gap-2">
+              {BUITENLANDSE_LUCHTHAVENS.map(({ id, label }) => (
+                <Keuzechip
+                  key={id}
+                  checked={waarden.luchthavens.includes(id)}
+                  onChange={() => wissel('luchthavens', id)}
+                >
+                  <span className="w-full text-center">{label}</span>
+                </Keuzechip>
+              ))}
+            </div>
+            <p className="mt-2 text-xs text-slate-500">Reken zelf de reiskosten naar het vliegveld mee.</p>
+          </div>
+        ) : (
+          <button
+            type="button"
+            onClick={() => {
+              setToonBuitenland(true);
+              onChange({
+                ...waarden,
+                luchthavens: [...new Set([...waarden.luchthavens, ...BUITENLANDSE_LUCHTHAVENS.map((l) => l.id)])],
+              });
+            }}
+            className="mt-2 text-sm font-medium text-teal-700 hover:text-teal-800 hover:underline"
+          >
+            + Ook Weeze, Düsseldorf en Charleroi vergelijken
+          </button>
+        )}
       </Groep>
 
       <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-1">
@@ -158,25 +207,42 @@ export default function SearchForm({ waarden, fouten, onChange, onSubmit }) {
       <Groep legend="Type vakantie" hint="Niets geselecteerd? Dan zoeken we in alle types.">
         <div className="grid grid-cols-2 gap-2">
           {VAKANTIETYPES.map(({ id, label, icoon }) => (
-            <label key={id} className="relative">
-              <input
-                type="checkbox"
-                checked={waarden.types.includes(id)}
-                onChange={() => wisselType(id)}
-                className="peer sr-only"
-              />
-              <span
-                className="flex cursor-pointer items-center gap-2 rounded-lg border border-stone-300 px-3 py-2.5 text-sm font-medium text-slate-700 transition
-                  hover:border-stone-400 peer-checked:border-teal-600 peer-checked:bg-teal-50 peer-checked:text-teal-900
-                  peer-focus-visible:ring-2 peer-focus-visible:ring-teal-600"
-              >
-                <span aria-hidden="true">{icoon}</span>
-                {label}
-              </span>
-            </label>
+            <Keuzechip key={id} checked={waarden.types.includes(id)} onChange={() => wissel('types', id)}>
+              <span aria-hidden="true">{icoon}</span>
+              {label}
+            </Keuzechip>
           ))}
         </div>
       </Groep>
+
+      <Groep legend="Wat er gebeurde" hint="Niets geselecteerd? Dan tonen we alle soorten incidenten.">
+        <div className="grid grid-cols-2 gap-2">
+          {INCIDENTSOORTEN.map(({ id, label }) => (
+            <Keuzechip key={id} checked={waarden.soorten.includes(id)} onChange={() => wissel('soorten', id)}>
+              {label}
+            </Keuzechip>
+          ))}
+        </div>
+      </Groep>
+
+      <Veld
+        label="Wanneer gebeurde het?"
+        htmlFor="recentheid"
+        hint="Vlak na een incident zijn de prijzen vaak het laagst."
+      >
+        <select
+          id="recentheid"
+          value={waarden.recentheid}
+          onChange={(e) => zet('recentheid')(e.target.value)}
+          className={invoerStijl}
+        >
+          {RECENTHEID.map(({ id, label }) => (
+            <option key={id} value={id}>
+              {label}
+            </option>
+          ))}
+        </select>
+      </Veld>
 
       <Groep legend="Minimaal veiligheidsniveau">
         <div className="space-y-2">

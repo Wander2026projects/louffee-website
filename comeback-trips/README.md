@@ -38,13 +38,23 @@ en begrensd tussen 1 en 10. Bestemmingen met rood worden nooit getoond.
 **Waardescore**: `prijsdaling (%) × (veiligheidsscore / 10)`, met
 `prijsdaling = (normalePrijs − huidigePrijs) / normalePrijs × 100`. De top 5 wordt getoond.
 
-**Filters**: budget, vakantietype, reismaand (moet een van de beste reismaanden zijn) en
-veiligheidsniveau.
+**Filters**: budget, vakantietype, reismaand (moet een van de beste reismaanden zijn),
+veiligheidsniveau, soort incident (aanslag of geweld, onrust, oorlog of conflict, natuurramp) en
+hoe recent het incident was (laatste 12 maanden of 2 jaar).
 
-**Prijs voor de gekozen periode**: de prijzen in de data gelden voor 7 dagen (vlucht + hotel).
-Bij een andere reisduur blijft 40% (globaal de vlucht) gelijk en schaalt 60% (het verblijf) per
-dag mee. Wordt een reis niet vanaf de gekozen luchthaven aangeboden (`vertrekVanaf`), dan telt de
-app er een geschatte toeslag van € 80 bij op. Beide waarden staan in `src/lib/constants.js`.
+**Sorteren**: standaard op waardeScore; daarnaast op laagste totaalprijs, goedkoopste vlucht of
+meest recente incident.
+
+**Goedkoopste vlucht**: per bestemming staan in `vluchtPrijzen` retourprijzen per luchthaven
+(Schiphol, Eindhoven, Rotterdam en over de grens Weeze, Düsseldorf en Brussel-Charleroi). De app
+kiest de goedkoopste uit de luchthavens die je aanvinkt. Vliegt geen daarvan erheen, dan rekent
+hij met de goedkoopste andere luchthaven plus een toeslag van € 80 (`src/lib/constants.js`).
+Elke kaart linkt naar Google Flights en Skyscanner met de route alvast ingevuld.
+
+**Prijs voor de gekozen periode**: vlucht + verblijf × aantal dagen. Het verblijf per week is
+`huidigePrijs − vluchtPrijzen.Schiphol` (de weekprijs is gebaseerd op vertrek vanaf Schiphol).
+
+**Bewaarlijst**: met het hartje bewaar je bestemmingen. Die lijst staat alleen in je eigen browser.
 
 ## Projectstructuur
 
@@ -56,13 +66,17 @@ src/
 │   ├── constants.js        # Maanden, types, adviesniveaus, prijsinstellingen
 │   ├── scoring.js          # Veiligheids- en waardescore, filters, ranking
 │   ├── scoring.test.js     # Tests voor de rekenregels en de data
+│   ├── links.js            # Links naar Google Flights en Skyscanner
+│   ├── useBewaarlijst.js   # Bewaarlijst in localStorage
 │   └── format.js           # Euro-, datum- en getalnotatie (nl-NL)
 └── components/
     ├── Header.jsx, Footer.jsx (met disclaimer), SampleDataNotice.jsx
     ├── SearchForm.jsx      # Invoerformulier
     ├── Results.jsx         # Top 5, lege staat of "geen resultaten"
-    ├── DestinationCard.jsx # Resultaatkaart (incl. oranje-waarschuwing)
+    ├── DestinationCard.jsx # Resultaatkaart (vluchtprijzen, oranje-waarschuwing, links)
     ├── NoResults.jsx       # Vriendelijke melding met klikbare tips
+    ├── SavedList.jsx       # Bewaarlijst
+    ├── TravelTips.jsx      # Bespaartips en tips om lokaal te helpen
     └── AdviceBadge, SafetyScore, TrendIndicator, ScoreExplanation, icons
 ```
 
@@ -77,14 +91,16 @@ Voeg een object toe aan `bestemmingen` in `src/data/destinations.json`:
   "land": "Land",
   "regio": "Regio",
   "type": ["strand", "cultuur"],
-  "incident": { "omschrijving": "Wat er gebeurde.", "jaar": 2020 },
+  "incident": { "omschrijving": "Wat er gebeurde.", "soort": "aanslag", "jaar": 2020, "maand": 6 },
   "reisadvies": "groen",
   "adviesTrend": "stabiel",
   "laatstGecontroleerd": "2026-10-01",
   "normalePrijs": 800,
   "huidigePrijs": 650,
+  "vluchtPrijzen": { "Schiphol": 220, "Eindhoven": 180 },
   "besteReismaanden": [5, 6, 9],
-  "vertrekVanaf": ["Schiphol"],
+  "vliegveld": "ABC",
+  "vliegduurUren": 3,
   "reisadviesUrl": "https://www.nederlandwereldwijd.nl/reisadvies/land"
 }
 ```

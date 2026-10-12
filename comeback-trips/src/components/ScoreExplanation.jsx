@@ -1,9 +1,7 @@
-import { LUCHTHAVEN_TOESLAG, VAST_PRIJSAANDEEL } from '../lib/constants.js';
+import { LUCHTHAVEN_TOESLAG } from '../lib/constants.js';
 import { formatEuro } from '../lib/format.js';
 
 export default function ScoreExplanation() {
-  const vastProcent = Math.round(VAST_PRIJSAANDEEL * 100);
-
   return (
     <details className="group rounded-2xl border border-stone-200 bg-white p-5 text-sm text-slate-600 open:shadow-sm sm:p-6">
       <summary className="flex cursor-pointer list-none items-center justify-between font-semibold text-slate-900">
@@ -33,10 +31,10 @@ export default function ScoreExplanation() {
         <div>
           <h3 className="font-semibold text-slate-800">Geschatte prijs</h3>
           <p className="mt-1">
-            Prijzen zijn gebaseerd op een week (vlucht + hotel). Bij een andere reisduur blijft
-            ongeveer {vastProcent}% (de vlucht) gelijk en schaalt de rest per dag mee. Wordt een reis
-            niet vanaf jouw luchthaven aangeboden, dan tellen we er ca. {formatEuro(LUCHTHAVEN_TOESLAG)}{' '}
-            bij op.
+            De goedkoopste retourvlucht vanaf de luchthavens die je hebt gekozen, plus het verblijf
+            per dag maal het aantal dagen. Vliegt geen van jouw luchthavens erheen, dan rekenen we
+            met de goedkoopste andere luchthaven plus ca. {formatEuro(LUCHTHAVEN_TOESLAG)} voor de
+            reis ernaartoe.
           </p>
         </div>
       </div>
