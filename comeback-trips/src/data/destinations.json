@@ -1,0 +1,523 @@
+{
+  "_meta": {
+    "voorbeelddata": true,
+    "toelichting": "VOORBEELDDATA. De incidenten zijn echt gebeurd, maar reisadviezen, trends, controledata en prijzen zijn schattingen ter illustratie. Controleer altijd het actuele reisadvies op nederlandwereldwijd.nl.",
+    "prijzen": "Indicatie in euro per persoon per week (7 dagen), inclusief retourvlucht en hotel, gebaseerd op vertrek vanaf Schiphol.",
+    "vertrekVanaf": "Luchthavens van waaruit deze reis voor de basisprijs wordt aangeboden. Vanaf andere luchthavens rekent de app een geschatte toeslag."
+  },
+  "bestemmingen": [
+    {
+      "id": "sharm-el-sheikh",
+      "naam": "Sharm el-Sheikh",
+      "land": "Egypte",
+      "regio": "Zuid-Sinaï",
+      "type": ["strand", "natuur"],
+      "incident": {
+        "omschrijving": "Bomaanslag op Metrojet-vlucht 9268 kort na vertrek uit Sharm el-Sheikh. Veel Europese landen schortten daarna jarenlang vluchten op.",
+        "jaar": 2015
+      },
+      "reisadvies": "geel",
+      "adviesTrend": "verbeterd",
+      "laatstGecontroleerd": "2026-09-30",
+      "normalePrijs": 980,
+      "huidigePrijs": 640,
+      "besteReismaanden": [1, 2, 3, 4, 5, 10, 11, 12],
+      "vertrekVanaf": ["Schiphol", "Eindhoven"],
+      "reisadviesUrl": "https://www.nederlandwereldwijd.nl/reisadvies/egypte"
+    },
+    {
+      "id": "sousse",
+      "naam": "Sousse & Port El Kantaoui",
+      "land": "Tunesië",
+      "regio": "Sahel-kust",
+      "type": ["strand"],
+      "incident": {
+        "omschrijving": "Terroristische aanslag op het strand bij een hotel in Port El Kantaoui, waarbij 38 toeristen omkwamen.",
+        "jaar": 2015
+      },
+      "reisadvies": "geel",
+      "adviesTrend": "verbeterd",
+      "laatstGecontroleerd": "2026-09-24",
+      "normalePrijs": 840,
+      "huidigePrijs": 560,
+      "besteReismaanden": [5, 6, 7, 8, 9, 10],
+      "vertrekVanaf": ["Schiphol", "Eindhoven", "Rotterdam"],
+      "reisadviesUrl": "https://www.nederlandwereldwijd.nl/reisadvies/tunesie"
+    },
+    {
+      "id": "djerba",
+      "naam": "Djerba",
+      "land": "Tunesië",
+      "regio": "Eiland Djerba",
+      "type": ["strand", "cultuur"],
+      "incident": {
+        "omschrijving": "Aanslag bij de eeuwenoude La Ghriba-synagoge tijdens de jaarlijkse pelgrimstocht.",
+        "jaar": 2023
+      },
+      "reisadvies": "geel",
+      "adviesTrend": "stabiel",
+      "laatstGecontroleerd": "2026-09-24",
+      "normalePrijs": 790,
+      "huidigePrijs": 610,
+      "besteReismaanden": [4, 5, 6, 9, 10],
+      "vertrekVanaf": ["Schiphol", "Eindhoven"],
+      "reisadviesUrl": "https://www.nederlandwereldwijd.nl/reisadvies/tunesie"
+    },
+    {
+      "id": "istanbul",
+      "naam": "Istanbul",
+      "land": "Turkije",
+      "regio": "Marmara",
+      "type": ["stad", "cultuur"],
+      "incident": {
+        "omschrijving": "Bomaanslag in de drukke winkelstraat İstiklal Caddesi in het centrum van de stad.",
+        "jaar": 2022
+      },
+      "reisadvies": "geel",
+      "adviesTrend": "stabiel",
+      "laatstGecontroleerd": "2026-10-02",
+      "normalePrijs": 690,
+      "huidigePrijs": 610,
+      "besteReismaanden": [4, 5, 6, 9, 10, 11],
+      "vertrekVanaf": ["Schiphol", "Eindhoven"],
+      "reisadviesUrl": "https://www.nederlandwereldwijd.nl/reisadvies/turkije"
+    },
+    {
+      "id": "antakya",
+      "naam": "Antakya",
+      "land": "Turkije",
+      "regio": "Provincie Hatay",
+      "type": ["stad", "cultuur"],
+      "incident": {
+        "omschrijving": "Zware aardbeving in Zuidoost-Turkije en Noord-Syrië. De historische binnenstad van Antakya werd grotendeels verwoest en wordt nu herbouwd.",
+        "jaar": 2023
+      },
+      "reisadvies": "oranje",
+      "adviesTrend": "verbeterd",
+      "laatstGecontroleerd": "2026-10-02",
+      "normalePrijs": 760,
+      "huidigePrijs": 430,
+      "besteReismaanden": [3, 4, 5, 10, 11],
+      "vertrekVanaf": ["Schiphol"],
+      "reisadviesUrl": "https://www.nederlandwereldwijd.nl/reisadvies/turkije"
+    },
+    {
+      "id": "marrakesh",
+      "naam": "Marrakesh",
+      "land": "Marokko",
+      "regio": "Marrakesh-Safi",
+      "type": ["stad", "cultuur"],
+      "incident": {
+        "omschrijving": "Krachtige aardbeving in het Atlasgebergte, ook voelbaar in Marrakesh, waar delen van de oude medina beschadigd raakten.",
+        "jaar": 2023
+      },
+      "reisadvies": "geel",
+      "adviesTrend": "verbeterd",
+      "laatstGecontroleerd": "2026-09-18",
+      "normalePrijs": 720,
+      "huidigePrijs": 560,
+      "besteReismaanden": [3, 4, 5, 10, 11],
+      "vertrekVanaf": ["Schiphol", "Eindhoven", "Rotterdam"],
+      "reisadviesUrl": "https://www.nederlandwereldwijd.nl/reisadvies/marokko"
+    },
+    {
+      "id": "hoge-atlas",
+      "naam": "Imlil & Hoge Atlas",
+      "land": "Marokko",
+      "regio": "Al Haouz",
+      "type": ["natuur", "cultuur"],
+      "incident": {
+        "omschrijving": "Het epicentrum van de aardbeving van september 2023 lag in deze regio; veel Berberdorpen in de bergen werden zwaar getroffen.",
+        "jaar": 2023
+      },
+      "reisadvies": "geel",
+      "adviesTrend": "verbeterd",
+      "laatstGecontroleerd": "2026-09-18",
+      "normalePrijs": 780,
+      "huidigePrijs": 540,
+      "besteReismaanden": [4, 5, 6, 9, 10],
+      "vertrekVanaf": ["Schiphol", "Eindhoven", "Rotterdam"],
+      "reisadviesUrl": "https://www.nederlandwereldwijd.nl/reisadvies/marokko"
+    },
+    {
+      "id": "pokhara",
+      "naam": "Pokhara & Annapurna",
+      "land": "Nepal",
+      "regio": "Gandaki",
+      "type": ["natuur", "cultuur"],
+      "incident": {
+        "omschrijving": "Landelijke, gewelddadige jongerenprotesten (de ‘Gen Z-protesten’), vooral in Kathmandu, leidden tot tientallen doden en de val van de regering.",
+        "jaar": 2025
+      },
+      "reisadvies": "geel",
+      "adviesTrend": "verbeterd",
+      "laatstGecontroleerd": "2026-09-27",
+      "normalePrijs": 1450,
+      "huidigePrijs": 1090,
+      "besteReismaanden": [3, 4, 10, 11],
+      "vertrekVanaf": ["Schiphol"],
+      "reisadviesUrl": "https://www.nederlandwereldwijd.nl/reisadvies/nepal"
+    },
+    {
+      "id": "lombok",
+      "naam": "Lombok",
+      "land": "Indonesië",
+      "regio": "West-Nusa Tenggara",
+      "type": ["strand", "natuur"],
+      "incident": {
+        "omschrijving": "Een reeks zware aardbevingen trof het eiland; vooral het noorden van Lombok en de Gili-eilanden liepen veel schade op.",
+        "jaar": 2018
+      },
+      "reisadvies": "geel",
+      "adviesTrend": "stabiel",
+      "laatstGecontroleerd": "2026-09-12",
+      "normalePrijs": 1480,
+      "huidigePrijs": 1150,
+      "besteReismaanden": [5, 6, 7, 8, 9],
+      "vertrekVanaf": ["Schiphol"],
+      "reisadviesUrl": "https://www.nederlandwereldwijd.nl/reisadvies/indonesie"
+    },
+    {
+      "id": "galle",
+      "naam": "Galle & Mirissa",
+      "land": "Sri Lanka",
+      "regio": "Zuidkust",
+      "type": ["strand", "cultuur"],
+      "incident": {
+        "omschrijving": "Paaszondag-aanslagen op kerken en luxehotels in onder meer Colombo en Negombo.",
+        "jaar": 2019
+      },
+      "reisadvies": "geel",
+      "adviesTrend": "verbeterd",
+      "laatstGecontroleerd": "2026-10-05",
+      "normalePrijs": 1390,
+      "huidigePrijs": 990,
+      "besteReismaanden": [1, 2, 3, 4, 12],
+      "vertrekVanaf": ["Schiphol"],
+      "reisadviesUrl": "https://www.nederlandwereldwijd.nl/reisadvies/sri-lanka"
+    },
+    {
+      "id": "sri-lanka-hooglanden",
+      "naam": "Kandy & Ella",
+      "land": "Sri Lanka",
+      "regio": "Centrale Hooglanden",
+      "type": ["natuur", "cultuur"],
+      "incident": {
+        "omschrijving": "Zware economische crisis met brandstoftekorten en massale protesten, die leidden tot het aftreden van de president.",
+        "jaar": 2022
+      },
+      "reisadvies": "geel",
+      "adviesTrend": "verbeterd",
+      "laatstGecontroleerd": "2026-10-05",
+      "normalePrijs": 1290,
+      "huidigePrijs": 920,
+      "besteReismaanden": [1, 2, 3, 4, 8],
+      "vertrekVanaf": ["Schiphol"],
+      "reisadviesUrl": "https://www.nederlandwereldwijd.nl/reisadvies/sri-lanka"
+    },
+    {
+      "id": "petra",
+      "naam": "Petra & Wadi Rum",
+      "land": "Jordanië",
+      "regio": "Zuid-Jordanië",
+      "type": ["cultuur", "natuur"],
+      "incident": {
+        "omschrijving": "De oorlog in het nabijgelegen Gaza zorgde voor massale annuleringen in de hele regio; het aantal bezoekers aan Petra kelderde.",
+        "jaar": 2023
+      },
+      "reisadvies": "geel",
+      "adviesTrend": "stabiel",
+      "laatstGecontroleerd": "2026-10-07",
+      "normalePrijs": 1150,
+      "huidigePrijs": 720,
+      "besteReismaanden": [3, 4, 5, 10, 11],
+      "vertrekVanaf": ["Schiphol", "Eindhoven"],
+      "reisadviesUrl": "https://www.nederlandwereldwijd.nl/reisadvies/jordanie"
+    },
+    {
+      "id": "cusco",
+      "naam": "Cusco & Heilige Vallei",
+      "land": "Peru",
+      "regio": "Cusco",
+      "type": ["cultuur", "natuur"],
+      "incident": {
+        "omschrijving": "Landelijke onrust na de afzetting van president Castillo; Machu Picchu ging tijdelijk dicht en het treinverkeer lag stil.",
+        "jaar": 2023
+      },
+      "reisadvies": "geel",
+      "adviesTrend": "verbeterd",
+      "laatstGecontroleerd": "2026-09-21",
+      "normalePrijs": 1750,
+      "huidigePrijs": 1340,
+      "besteReismaanden": [5, 6, 7, 8, 9],
+      "vertrekVanaf": ["Schiphol"],
+      "reisadviesUrl": "https://www.nederlandwereldwijd.nl/reisadvies/peru"
+    },
+    {
+      "id": "bohol",
+      "naam": "Bohol",
+      "land": "Filipijnen",
+      "regio": "Centraal-Visayas",
+      "type": ["strand", "natuur"],
+      "incident": {
+        "omschrijving": "Supertyfoon Rai (Odette) veroorzaakte grote schade aan woningen, resorts en infrastructuur op het eiland.",
+        "jaar": 2021
+      },
+      "reisadvies": "geel",
+      "adviesTrend": "stabiel",
+      "laatstGecontroleerd": "2026-09-15",
+      "normalePrijs": 1520,
+      "huidigePrijs": 1190,
+      "besteReismaanden": [1, 2, 3, 4, 5],
+      "vertrekVanaf": ["Schiphol"],
+      "reisadviesUrl": "https://www.nederlandwereldwijd.nl/reisadvies/filipijnen"
+    },
+    {
+      "id": "masai-mara",
+      "naam": "Masai Mara",
+      "land": "Kenia",
+      "regio": "Narok",
+      "type": ["natuur"],
+      "incident": {
+        "omschrijving": "Gewelddadige protesten in Nairobi tegen een nieuwe belastingwet; demonstranten drongen het parlementsgebouw binnen.",
+        "jaar": 2024
+      },
+      "reisadvies": "geel",
+      "adviesTrend": "stabiel",
+      "laatstGecontroleerd": "2026-09-29",
+      "normalePrijs": 2150,
+      "huidigePrijs": 1780,
+      "besteReismaanden": [1, 2, 7, 8, 9, 10],
+      "vertrekVanaf": ["Schiphol"],
+      "reisadviesUrl": "https://www.nederlandwereldwijd.nl/reisadvies/kenia"
+    },
+    {
+      "id": "lamu",
+      "naam": "Lamu",
+      "land": "Kenia",
+      "regio": "Lamu County (kust)",
+      "type": ["strand", "cultuur"],
+      "incident": {
+        "omschrijving": "Aanvallen door terreurgroep al-Shabaab op het vasteland van Lamu County, onder meer in Mpeketoni.",
+        "jaar": 2014
+      },
+      "reisadvies": "oranje",
+      "adviesTrend": "stabiel",
+      "laatstGecontroleerd": "2026-09-29",
+      "normalePrijs": 1550,
+      "huidigePrijs": 980,
+      "besteReismaanden": [1, 2, 3, 8, 9, 10],
+      "vertrekVanaf": ["Schiphol"],
+      "reisadviesUrl": "https://www.nederlandwereldwijd.nl/reisadvies/kenia"
+    },
+    {
+      "id": "acapulco",
+      "naam": "Acapulco",
+      "land": "Mexico",
+      "regio": "Guerrero",
+      "type": ["strand", "stad"],
+      "incident": {
+        "omschrijving": "Orkaan Otis (categorie 5) raasde over Acapulco en beschadigde vrijwel alle hotels rond de baai.",
+        "jaar": 2023
+      },
+      "reisadvies": "oranje",
+      "adviesTrend": "stabiel",
+      "laatstGecontroleerd": "2026-09-09",
+      "normalePrijs": 1600,
+      "huidigePrijs": 1050,
+      "besteReismaanden": [1, 2, 3, 4, 11, 12],
+      "vertrekVanaf": ["Schiphol"],
+      "reisadviesUrl": "https://www.nederlandwereldwijd.nl/reisadvies/mexico"
+    },
+    {
+      "id": "valencia",
+      "naam": "Valencia",
+      "land": "Spanje",
+      "regio": "Valenciaanse Gemeenschap",
+      "type": ["stad", "strand"],
+      "incident": {
+        "omschrijving": "Extreme regenval (DANA) veroorzaakte dodelijke overstromingen in de zuidelijke voorsteden van Valencia.",
+        "jaar": 2024
+      },
+      "reisadvies": "groen",
+      "adviesTrend": "verbeterd",
+      "laatstGecontroleerd": "2026-10-08",
+      "normalePrijs": 690,
+      "huidigePrijs": 590,
+      "besteReismaanden": [3, 4, 5, 6, 9, 10],
+      "vertrekVanaf": ["Schiphol", "Eindhoven", "Rotterdam"],
+      "reisadviesUrl": "https://www.nederlandwereldwijd.nl/reisadvies/spanje"
+    },
+    {
+      "id": "la-palma",
+      "naam": "La Palma",
+      "land": "Spanje",
+      "regio": "Canarische Eilanden",
+      "type": ["natuur"],
+      "incident": {
+        "omschrijving": "Drie maanden durende uitbarsting van de vulkaan Cumbre Vieja; lavastromen verwoestten duizenden gebouwen.",
+        "jaar": 2021
+      },
+      "reisadvies": "groen",
+      "adviesTrend": "verbeterd",
+      "laatstGecontroleerd": "2026-10-08",
+      "normalePrijs": 890,
+      "huidigePrijs": 690,
+      "besteReismaanden": [1, 2, 3, 4, 5, 6, 9, 10, 11, 12],
+      "vertrekVanaf": ["Schiphol"],
+      "reisadviesUrl": "https://www.nederlandwereldwijd.nl/reisadvies/spanje"
+    },
+    {
+      "id": "rhodos",
+      "naam": "Rhodos",
+      "land": "Griekenland",
+      "regio": "Dodecanesos",
+      "type": ["strand", "cultuur"],
+      "incident": {
+        "omschrijving": "Grote bosbranden in het zuiden van het eiland; tienduizenden toeristen en bewoners werden geëvacueerd.",
+        "jaar": 2023
+      },
+      "reisadvies": "groen",
+      "adviesTrend": "stabiel",
+      "laatstGecontroleerd": "2026-09-26",
+      "normalePrijs": 840,
+      "huidigePrijs": 680,
+      "besteReismaanden": [5, 6, 9, 10],
+      "vertrekVanaf": ["Schiphol", "Eindhoven", "Rotterdam"],
+      "reisadviesUrl": "https://www.nederlandwereldwijd.nl/reisadvies/griekenland"
+    },
+    {
+      "id": "evia",
+      "naam": "Noord-Evia",
+      "land": "Griekenland",
+      "regio": "Centraal-Griekenland",
+      "type": ["natuur", "strand"],
+      "incident": {
+        "omschrijving": "Verwoestende bosbranden legden een groot deel van de bossen in het noorden van het eiland in de as.",
+        "jaar": 2021
+      },
+      "reisadvies": "groen",
+      "adviesTrend": "verbeterd",
+      "laatstGecontroleerd": "2026-09-26",
+      "normalePrijs": 720,
+      "huidigePrijs": 540,
+      "besteReismaanden": [5, 6, 7, 9, 10],
+      "vertrekVanaf": ["Schiphol", "Eindhoven"],
+      "reisadviesUrl": "https://www.nederlandwereldwijd.nl/reisadvies/griekenland"
+    },
+    {
+      "id": "valnerina",
+      "naam": "Norcia & Valnerina",
+      "land": "Italië",
+      "regio": "Umbrië & Marche",
+      "type": ["natuur", "cultuur"],
+      "incident": {
+        "omschrijving": "Een reeks aardbevingen in Midden-Italië trof onder meer de stadjes Amatrice en Norcia.",
+        "jaar": 2016
+      },
+      "reisadvies": "groen",
+      "adviesTrend": "stabiel",
+      "laatstGecontroleerd": "2026-09-03",
+      "normalePrijs": 780,
+      "huidigePrijs": 650,
+      "besteReismaanden": [4, 5, 6, 9, 10],
+      "vertrekVanaf": ["Schiphol", "Eindhoven"],
+      "reisadviesUrl": "https://www.nederlandwereldwijd.nl/reisadvies/italie"
+    },
+    {
+      "id": "zagreb",
+      "naam": "Zagreb",
+      "land": "Kroatië",
+      "regio": "Stad Zagreb",
+      "type": ["stad", "cultuur"],
+      "incident": {
+        "omschrijving": "Aardbeving beschadigde de historische binnenstad, waaronder de kathedraal en het parlementsgebouw.",
+        "jaar": 2020
+      },
+      "reisadvies": "groen",
+      "adviesTrend": "verbeterd",
+      "laatstGecontroleerd": "2026-09-03",
+      "normalePrijs": 560,
+      "huidigePrijs": 480,
+      "besteReismaanden": [4, 5, 6, 9, 10, 12],
+      "vertrekVanaf": ["Schiphol", "Eindhoven"],
+      "reisadviesUrl": "https://www.nederlandwereldwijd.nl/reisadvies/kroatie"
+    },
+    {
+      "id": "madeira",
+      "naam": "Madeira",
+      "land": "Portugal",
+      "regio": "Autonome regio Madeira",
+      "type": ["natuur"],
+      "incident": {
+        "omschrijving": "Langdurige bosbranden in het bergachtige binnenland; populaire wandelpaden waren tijdelijk gesloten.",
+        "jaar": 2024
+      },
+      "reisadvies": "groen",
+      "adviesTrend": "stabiel",
+      "laatstGecontroleerd": "2026-09-19",
+      "normalePrijs": 870,
+      "huidigePrijs": 760,
+      "besteReismaanden": [3, 4, 5, 6, 9, 10],
+      "vertrekVanaf": ["Schiphol", "Rotterdam"],
+      "reisadviesUrl": "https://www.nederlandwereldwijd.nl/reisadvies/portugal"
+    },
+    {
+      "id": "nice",
+      "naam": "Nice",
+      "land": "Frankrijk",
+      "regio": "Côte d’Azur",
+      "type": ["stad", "strand"],
+      "incident": {
+        "omschrijving": "Aanslag met een vrachtwagen op de Promenade des Anglais tijdens de viering van de Franse nationale feestdag.",
+        "jaar": 2016
+      },
+      "reisadvies": "groen",
+      "adviesTrend": "stabiel",
+      "laatstGecontroleerd": "2026-09-19",
+      "normalePrijs": 820,
+      "huidigePrijs": 740,
+      "besteReismaanden": [5, 6, 9, 10],
+      "vertrekVanaf": ["Schiphol", "Eindhoven", "Rotterdam"],
+      "reisadviesUrl": "https://www.nederlandwereldwijd.nl/reisadvies/frankrijk"
+    },
+    {
+      "id": "beiroet",
+      "naam": "Beiroet",
+      "land": "Libanon",
+      "regio": "Beiroet",
+      "type": ["stad", "cultuur"],
+      "incident": {
+        "omschrijving": "Enorme explosie in de haven van Beiroet die grote delen van de stad verwoestte.",
+        "jaar": 2020
+      },
+      "reisadvies": "rood",
+      "adviesTrend": "stabiel",
+      "laatstGecontroleerd": "2026-10-07",
+      "normalePrijs": 900,
+      "huidigePrijs": 520,
+      "besteReismaanden": [4, 5, 10],
+      "vertrekVanaf": ["Schiphol"],
+      "reisadviesUrl": "https://www.nederlandwereldwijd.nl/reisadvies/libanon"
+    },
+    {
+      "id": "bagan",
+      "naam": "Bagan",
+      "land": "Myanmar",
+      "regio": "Mandalay",
+      "type": ["cultuur"],
+      "incident": {
+        "omschrijving": "Militaire staatsgreep, gevolgd door een aanhoudend gewapend conflict in grote delen van het land.",
+        "jaar": 2021
+      },
+      "reisadvies": "rood",
+      "adviesTrend": "stabiel",
+      "laatstGecontroleerd": "2026-10-07",
+      "normalePrijs": 1400,
+      "huidigePrijs": 900,
+      "besteReismaanden": [1, 2, 11, 12],
+      "vertrekVanaf": ["Schiphol"],
+      "reisadviesUrl": "https://www.nederlandwereldwijd.nl/reisadvies/myanmar"
+    }
+  ]
+}
