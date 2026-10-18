@@ -21,28 +21,26 @@ const NO_DIVERSITY: ComboSettings = { minLegs: 2, maxLegs: 5, minReturn: 2, maxR
 /** Every valid combo (one leg per match, leg count in range, return >= Rmin), best `keep` first. */
 function bruteForce(legs: Leg[], settings: ComboSettings, keep: number): Combo[] {
   const groups = [...Map.groupBy(legs, (l) => l.matchId).values()];
-  const best: Combo[] = []; // sorted, best first
+  let best: Combo[] = []; // best first after every prune
+  let worstProb = -1; // probability of the keep-th combo once the list is full
   const chosen: Leg[] = [];
 
+  // Collect, then sort and cut in batches: much faster than sorted inserts.
+  const prune = () => {
+    best.sort(compareCombos);
+    if (best.length > keep) best = best.slice(0, keep);
+    if (best.length >= keep) worstProb = best[best.length - 1].prob;
+  };
   const consider = () => {
     const combo = makeCombo([...chosen]);
-    if (combo.ret < settings.minReturn) return;
-    if (best.length >= keep && compareCombos(combo, best[best.length - 1]) >= 0) return;
-    let lo = 0;
-    let hi = best.length;
-    while (lo < hi) {
-      const mid = (lo + hi) >> 1;
-      if (compareCombos(best[mid], combo) <= 0) lo = mid + 1;
-      else hi = mid;
-    }
-    best.splice(lo, 0, combo);
-    if (best.length > keep) best.pop();
+    if (combo.ret < settings.minReturn || combo.prob < worstProb * (1 - 1e-9)) return;
+    best.push(combo);
+    if (best.length >= 2 * keep) prune();
   };
 
   const walk = (g: number, prob: number) => {
     // Adding legs only lowers the probability, so a branch already below the
     // current number `keep` can never enter the list.
-    const worstProb = best.length >= keep ? best[best.length - 1].prob : -1;
     if (prob < worstProb * (1 - 1e-9)) return;
     if (chosen.length >= settings.minLegs) consider();
     if (chosen.length === settings.maxLegs) return;
@@ -55,6 +53,7 @@ function bruteForce(legs: Leg[], settings: ComboSettings, keep: number): Combo[]
     }
   };
   walk(0, 1);
+  prune();
   return best;
 }
 
@@ -175,12 +174,34 @@ describe("optimizer vs. brute force", () => {
     combos.forEach((c, i) => expect(c.prob).toBeCloseTo(brute[i].prob, 12));
   });
 
-  it("met diversiteit: zelfde lijst als greedy over de brute-force ranglijst", () => {
-    const legs = fakeMatches(11, 20, 3, 5);
-    const settings: ComboSettings = { minLegs: 2, maxLegs: 5, minReturn: 2, maxResults: 25, maxLegReuse: 3 };
-    const brute = selectDiverse(bruteForce(paretoFilter(legs), { ...settings, maxLegReuse: Infinity }, 3000), 25, 3);
+  it.each([
+    [11, 2],
+    [1, 10],
+    [4, 5],
+    [24, 10],
+  ])("met diversiteit (seed %i, Rmin %d): zelfde lijst als greedy over de brute-force ranglijst", (seed, minReturn) => {
+    const legs = fakeMatches(seed, 20, 3, 5);
+    const settings: ComboSettings = { minLegs: 2, maxLegs: 5, minReturn, maxResults: 25, maxLegReuse: 3 };
+    const brute = selectDiverse(bruteForce(paretoFilter(legs), { ...settings, maxLegReuse: Infinity }, 20000), 25, 3);
     const { combos } = findBestCombos(legs, settings);
-    expect(combos.map((c) => comboKey(c.legs))).toEqual(brute.map((c) => comboKey(c.legs)));
+    expect(combos.map((c) => c.prob)).toHaveLength(brute.length);
+    combos.forEach((c, i) => expect(c.prob).toBeCloseTo(brute[i].prob, 12));
+  });
+
+  it("gelijke kans (op afronding na): hogere EV eerst", () => {
+    const leg = (id: string, matchId: string, fairProb: number, effPrice: number, kickoff: string) =>
+      fakeLeg({ id, matchId, fairProb, effPrice, kickoff });
+    const abc = makeCombo([
+      leg("a", "1", 0.55, 0.5, "2026-10-19T10:00:00Z"),
+      leg("b", "2", 0.6, 0.5, "2026-10-19T11:00:00Z"),
+      leg("c", "3", 0.7, 0.5, "2026-10-19T12:00:00Z"),
+    ]);
+    const def = makeCombo([
+      leg("d", "4", 0.6, 0.6, "2026-10-19T10:00:00Z"),
+      leg("e", "5", 0.7, 0.6, "2026-10-19T11:00:00Z"),
+      leg("f", "6", 0.55, 0.6, "2026-10-19T12:00:00Z"),
+    ]);
+    expect([def, abc].sort(compareCombos)[0]).toBe(abc); // EV 1,848 above 1,069
   });
 
   it("2 tot 3 legs en een hoge Rmin", () => {

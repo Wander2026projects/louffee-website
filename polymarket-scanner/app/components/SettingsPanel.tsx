@@ -57,12 +57,22 @@ export function SettingsPanel({ settings, onChange, sports }: Props) {
             Alle sporten
           </Chip>
           {sports.map((s) => (
-            <Chip key={s.name} active={!allSports && sportOn(s.name)} dim={allSports} onClick={() => toggleSport(s.name)}>
+            <Chip
+              key={s.name}
+              active={!allSports && sportOn(s.name)}
+              pressed={sportOn(s.name)}
+              dim={allSports}
+              onClick={() => toggleSport(s.name)}
+            >
               {s.name}
-              <span className="ml-1 text-xs opacity-60">{s.matches}</span>
+              <span className="ml-1 text-xs">
+                <span className="sr-only">, </span>
+                {s.matches}
+                <span className="sr-only"> wedstrijden</span>
+              </span>
             </Chip>
           ))}
-          {sports.length === 0 && <span className="text-sm text-zinc-500">Scan eerst om de sporten te zien.</span>}
+          {sports.length === 0 && <span className="text-sm text-zinc-500 dark:text-zinc-400">Scan eerst om de sporten te zien.</span>}
         </div>
       </Field>
 
@@ -87,14 +97,14 @@ export function SettingsPanel({ settings, onChange, sports }: Props) {
         <div>
           <Label>Aantal legs</Label>
           <div className="flex items-center gap-2 text-sm">
-            <span className="text-zinc-500">min.</span>
+            <span className="text-zinc-500 dark:text-zinc-400">min.</span>
             <Select
               value={settings.minLegs}
               options={range(LIMITS.legs.min, LIMITS.legs.max)}
               onChange={(v) => set({ minLegs: v, maxLegs: Math.max(v, settings.maxLegs) })}
               aria="Minimum aantal legs"
             />
-            <span className="text-zinc-500">max.</span>
+            <span className="text-zinc-500 dark:text-zinc-400">max.</span>
             <Select
               value={settings.maxLegs}
               options={range(LIMITS.legs.min, LIMITS.legs.max)}
@@ -158,11 +168,13 @@ function Label({ children }: { children: React.ReactNode }) {
 
 function Chip({
   active,
+  pressed,
   dim,
   onClick,
   children,
 }: {
   active: boolean;
+  pressed?: boolean; // for screen readers when it differs from the look (sports under "Alle sporten")
   dim?: boolean;
   onClick: () => void;
   children: React.ReactNode;
@@ -171,7 +183,7 @@ function Chip({
     <button
       type="button"
       onClick={onClick}
-      aria-pressed={active}
+      aria-pressed={pressed ?? active}
       className={
         "rounded-full border px-3 py-1.5 text-sm transition-colors " +
         (active
@@ -211,6 +223,7 @@ function Slider({
         max={steps.length - 1}
         step={1}
         value={nearestIndex(steps, current)}
+        aria-valuetext={value}
         onChange={(e) => onPick(steps[Number(e.target.value)])}
         className="w-full accent-indigo-600"
       />

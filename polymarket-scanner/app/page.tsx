@@ -13,7 +13,7 @@ export default function Home() {
       <main>
         <Scanner />
       </main>
-      <footer className="mt-12 border-t border-zinc-200 pt-6 text-sm text-zinc-500 dark:border-zinc-800">
+      <footer className="mt-12 border-t border-zinc-200 pt-6 text-sm text-zinc-600 dark:border-zinc-800 dark:text-zinc-400">
         Analyse-tool met openbare Polymarket-data. Geen inzetadvies.
       </footer>
     </div>

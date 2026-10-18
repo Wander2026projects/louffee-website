@@ -18,6 +18,7 @@ export const SCAN = {
   maxRetries: 4, // on 429 / 5xx / network errors, with exponential backoff
   backoffMs: 500,
   requestTimeoutMs: 20_000,
+  scanDeadlineMs: 45_000, // whole scan, incl. retries; the hosting limit is 60 s
   cacheSeconds: 60, // server-side cache of a full scan
   userAgent: "polymarket-combo-scanner/1.0 (read-only analysis tool)",
 } as const;

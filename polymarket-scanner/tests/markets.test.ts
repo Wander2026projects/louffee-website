@@ -97,6 +97,35 @@ describe("voetbal (3-weg)", () => {
   });
 });
 
+describe("dubbel aangeboden wedstrijd", () => {
+  // The same game listed twice with home/away swapped (seen live for bkisrsl-mac4-hap6 / -hap6-mac4).
+  const epl = bySlug("epl-tot-cov-2026-10-19").main;
+  const swapped: GammaEvent = {
+    ...epl,
+    id: "999",
+    slug: "epl-cov-tot-2026-10-19",
+    gameId: 1,
+    teams: [...(epl.teams ?? [])].reverse(),
+    markets: (epl.markets ?? []).map((m) => ({
+      ...m,
+      id: `x${m.id}`,
+      clobTokenIds: JSON.stringify(JSON.parse(m.clobTokenIds!).map((t: string) => `x${t}`)),
+    })),
+  };
+  const withIds = (ev: GammaEvent): GammaEvent => ({ ...ev, teams: (ev.teams ?? []).map((t, i) => ({ ...t, id: i })) });
+  const [match] = groupMatches([withIds(epl), { ...withIds(swapped), teams: withIds(swapped).teams!.reverse() }]);
+
+  it("is één wedstrijd, met per aanbieding een eigen set thuis/gelijk/uit en een eigen link", () => {
+    const { candidates } = classifyMatch(match, SITE);
+    expect(candidates).toHaveLength(12);
+    expect(new Set(candidates.map((c) => c.group)).size).toBe(2);
+    expect(new Set(candidates.map((c) => c.url))).toEqual(
+      new Set(["https://polymarket.com/event/epl-tot-cov-2026-10-19", "https://polymarket.com/event/epl-cov-tot-2026-10-19"]),
+    );
+    for (const c of candidates) expect(c.url.endsWith(c.event.slug)).toBe(true);
+  });
+});
+
 describe("andere sporten (2-weg)", () => {
   it("tennis: winnaar en games/sets, competitie met toernooi", () => {
     const m = bySlug("atp-struff-giron-2026-10-19");
@@ -119,6 +148,32 @@ describe("andere sporten (2-weg)", () => {
     expect(labels("cs2-big5-priv-2026-10-19")).toContain("totals: Over 2,5 maps");
     expect(classifyMatch(bySlug("nfl-dal-gb-2026-10-19"), SITE).info.sport).toBe("American football");
     expect(labels("nfl-dal-gb-2026-10-19")).toContain("totals: Over 45,5 punten");
+  });
+
+  it("volleybal: sets als eenheid", () => {
+    const ev: GammaEvent = {
+      id: "v1",
+      slug: "vbligueaw-sai-vol2-2026-10-20",
+      title: "Saint Die Des Vosges vs. Volley Mulhouse Alsace",
+      startTime: "2026-10-20T18:00:00Z",
+      tags: [{ id: "102883" }],
+      markets: [
+        {
+          id: "m1",
+          question: "Saint Die Des Vosges vs. Volley Mulhouse Alsace: Total Sets O/U 3.5",
+          sportsMarketType: "totals",
+          outcomes: '["Over","Under"]',
+          clobTokenIds: '["t1","t2"]',
+          line: 3.5,
+          active: true,
+          closed: false,
+          acceptingOrders: true,
+          enableOrderBook: true,
+        },
+      ],
+    };
+    const [m] = groupMatches([ev]);
+    expect(classifyMatch(m, SITE).candidates.map((c) => c.pickLabel)).toEqual(["Over 3,5 sets", "Under 3,5 sets"]);
   });
 
   it("ITF zonder gameId", () => {

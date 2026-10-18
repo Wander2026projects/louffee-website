@@ -31,16 +31,22 @@ export function Scanner() {
   const [settings, setSettings] = useState<Settings>(DEFAULT_SETTINGS);
   const [scan, setScan] = useState<ScanState>({ kind: "idle" });
 
-  // Settings live in localStorage, which only exists in the browser.
-  // eslint-disable-next-line react-hooks/set-state-in-effect
-  useEffect(() => setSettings(loadSettings()), []);
+  // Settings live in localStorage, which only exists in the browser. Save only
+  // after they were loaded, or the first save would overwrite them with defaults.
+  const [loaded, setLoaded] = useState(false);
   useEffect(() => {
+    // eslint-disable-next-line react-hooks/set-state-in-effect
+    setSettings(loadSettings());
+    setLoaded(true);
+  }, []);
+  useEffect(() => {
+    if (!loaded) return;
     try {
       window.localStorage.setItem(STORAGE_KEY, JSON.stringify(settings));
     } catch {
       // ignore
     }
-  }, [settings]);
+  }, [settings, loaded]);
 
   const data = scan.kind === "done" ? scan.data : scan.kind === "idle" ? null : scan.previous;
   const legs: Leg[] | null = data?.legs ?? null;
@@ -82,7 +88,7 @@ export function Scanner() {
 
   return (
     <div className="space-y-6">
-      <section className="flex flex-col items-start gap-3 sm:flex-row sm:items-center sm:gap-6">
+      <section className="flex flex-col items-start gap-3">
         <button
           type="button"
           onClick={runScan}
@@ -117,9 +123,9 @@ export function Scanner() {
         <section className="space-y-4">
           <div className="flex flex-wrap items-baseline justify-between gap-2">
             <h2 className="text-lg font-semibold text-zinc-900 dark:text-zinc-100">
-              {list.length > 0 ? `${list.length} combos, hoogste kans eerst` : "Resultaten"}
+              {list.length > 0 ? `${list.length} ${list.length === 1 ? "combo" : "combos"}, hoogste kans eerst` : "Resultaten"}
             </h2>
-            <div className="text-xs text-zinc-500">
+            <div className="text-xs text-zinc-600 dark:text-zinc-400">
               {combos.busy ? "Berekenen…" : `${count(combos.filteredLegs)} legs na filters · ${num(combos.ms, 0)} ms`}
             </div>
           </div>

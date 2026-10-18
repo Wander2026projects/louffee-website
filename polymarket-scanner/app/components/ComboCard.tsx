@@ -8,13 +8,13 @@ export function ComboCard({ combo, rank }: { combo: Combo; rank: number }) {
     <article className="overflow-hidden rounded-2xl border border-zinc-200 bg-white shadow-sm dark:border-zinc-800 dark:bg-zinc-900">
       <div className="flex flex-wrap items-end gap-x-8 gap-y-3 p-4 sm:p-5">
         <div className="mr-auto flex items-baseline gap-3">
-          <span className="text-sm font-medium text-zinc-400 tabular-nums">#{rank}</span>
+          <span className="text-sm font-medium text-zinc-500 tabular-nums dark:text-zinc-400">#{rank}</span>
           <div>
-            <div className="text-xs font-medium tracking-wide text-zinc-500 uppercase">Kans</div>
+            <div className="text-xs font-medium tracking-wide text-zinc-500 uppercase dark:text-zinc-400">Kans</div>
             <div className="text-3xl font-bold tabular-nums text-zinc-900 dark:text-zinc-50">{pct(combo.prob)}</div>
           </div>
           <div className="ml-4">
-            <div className="text-xs font-medium tracking-wide text-zinc-500 uppercase">Return</div>
+            <div className="text-xs font-medium tracking-wide text-zinc-500 uppercase dark:text-zinc-400">Return</div>
             <div className="text-3xl font-bold tabular-nums text-indigo-600 dark:text-indigo-400">{times(combo.ret)}</div>
           </div>
         </div>
@@ -29,7 +29,7 @@ export function ComboCard({ combo, rank }: { combo: Combo; rank: number }) {
       {/* Desktop: table */}
       <div className="hidden overflow-x-auto border-t border-zinc-100 md:block dark:border-zinc-800">
         <table className="w-full text-left text-sm">
-          <thead className="bg-zinc-50 text-xs text-zinc-500 dark:bg-zinc-950/40">
+          <thead className="bg-zinc-50 text-xs text-zinc-500 dark:bg-zinc-950/40 dark:text-zinc-400">
             <tr>
               <Th>Sport</Th>
               <Th>Competitie</Th>
@@ -40,7 +40,9 @@ export function ComboCard({ combo, rank }: { combo: Combo; rank: number }) {
               <Th right>Prijs</Th>
               <Th right>Spread</Th>
               <Th right>Liquiditeit</Th>
-              <Th> </Th>
+              <Th>
+                <span className="sr-only">Link</span>
+              </Th>
             </tr>
           </thead>
           <tbody className="divide-y divide-zinc-100 dark:divide-zinc-800">
@@ -56,7 +58,7 @@ export function ComboCard({ combo, rank }: { combo: Combo; rank: number }) {
                   <span title={`Beste ask ${price(leg.askPrice)}, incl. fee ${price(leg.effPrice)}`}>
                     {price(leg.effPrice)}
                   </span>
-                  <div className="text-xs text-zinc-400">ask {price(leg.askPrice)}</div>
+                  <div className="text-xs text-zinc-500 dark:text-zinc-400">ask {price(leg.askPrice)}</div>
                 </Td>
                 <Td right>{cents(leg.spread)}</Td>
                 <Td right>{usd(leg.liquidity)}</Td>
@@ -84,16 +86,16 @@ export function ComboCard({ combo, rank }: { combo: Combo; rank: number }) {
               <div className="min-w-0">
                 <div className="font-semibold text-zinc-900 dark:text-zinc-100">{leg.pickLabel}</div>
                 <div className="text-zinc-700 dark:text-zinc-300">{leg.matchTitle}</div>
-                <div className="text-xs text-zinc-500">
+                <div className="text-xs text-zinc-500 dark:text-zinc-400">
                   {leg.sport} · {leg.competition} · {kickoff(leg.kickoff)}
                 </div>
               </div>
               <div className="shrink-0 text-right tabular-nums">
                 <div className="font-semibold">{pct(leg.fairProb)}</div>
-                <div className="text-xs text-zinc-500">prijs {price(leg.effPrice)}</div>
+                <div className="text-xs text-zinc-500 dark:text-zinc-400">prijs {price(leg.effPrice)}</div>
               </div>
             </div>
-            <div className="mt-1 flex flex-wrap gap-x-4 text-xs text-zinc-500">
+            <div className="mt-1 flex flex-wrap gap-x-4 text-xs text-zinc-500 dark:text-zinc-400">
               <span>ask {price(leg.askPrice)}</span>
               <span>spread {cents(leg.spread)}</span>
               <span>liq. {usd(leg.liquidity)}</span>
@@ -111,7 +113,7 @@ export function ComboCard({ combo, rank }: { combo: Combo; rank: number }) {
 function Stat({ label, value }: { label: string; value: string }) {
   return (
     <div>
-      <dt className="text-xs text-zinc-500">{label}</dt>
+      <dt className="text-xs text-zinc-500 dark:text-zinc-400">{label}</dt>
       <dd className="font-medium whitespace-nowrap tabular-nums text-zinc-900 dark:text-zinc-100">{value}</dd>
     </div>
   );
@@ -137,7 +139,7 @@ function Td({
   const cls = [
     "px-3 py-2",
     right ? "text-right tabular-nums whitespace-nowrap" : "",
-    muted ? "text-zinc-500" : "",
+    muted ? "text-zinc-500 dark:text-zinc-400" : "",
     strong ? "font-semibold text-zinc-900 dark:text-zinc-100" : "",
     nowrap ? "whitespace-nowrap" : "",
   ].join(" ");

@@ -147,8 +147,8 @@ export function matchTitleOf(ev: GammaEvent): string {
 
 const TOTALS_TYPES = new Set(["totals", "tennis_match_totals", "tennis_set_totals", "table_tennis_match_totals"]);
 
-function totalsUnit(sport: string, smt: string, leagueCode: string): string {
-  if (smt === "tennis_set_totals") return "sets";
+function totalsUnit(sport: string, smt: string, leagueCode: string, question: string): string {
+  if (smt === "tennis_set_totals" || /total sets/i.test(question)) return "sets";
   if (smt === "tennis_match_totals" || smt === "table_tennis_match_totals") return "games";
   switch (sport) {
     case "Voetbal":
@@ -159,6 +159,8 @@ function totalsUnit(sport: string, smt: string, leagueCode: string): string {
     case "American football":
     case "Rugby":
       return "punten";
+    case "Volleybal":
+      return "sets";
     case "Honkbal":
       return "runs";
     case "MMA":
@@ -190,6 +192,7 @@ export type LegCandidate = {
   groupTokens: string[]; // tokens whose midpoints are normalised together
   groupIndex: number; // this pick's position in groupTokens
   complement: boolean; // fairProb = 1 - normalised[groupIndex] (the "No" of a 3-way member)
+  url: string; // Polymarket page of the event that holds the market
 };
 
 export type MatchInfo = {
@@ -242,7 +245,7 @@ export function classifyMatch(match: Match, siteUrl: string): Classified {
     kickoff: main.startTime ?? "",
     url: `${siteUrl}/event/${main.slug}`,
   };
-  const candidates: LegCandidate[] = [];
+  const candidates: Omit<LegCandidate, "url">[] = [];
   const skipped: Classified["skipped"] = [];
   const scope = scopeSuffix(sport);
 
@@ -269,7 +272,7 @@ export function classifyMatch(match: Match, siteUrl: string): Classified {
           skipped.push({ market, reason: "totals_shape" });
           continue;
         }
-        const unit = totalsUnit(sport, smt, leagueCode);
+        const unit = totalsUnit(sport, smt, leagueCode, market.question ?? "");
         const group = `ou:${market.id}`;
         sides.forEach((side, i) =>
           candidates.push({
@@ -335,43 +338,48 @@ export function classifyMatch(match: Match, siteUrl: string): Classified {
       }),
     );
   }
-  if (yesNo.length > 0) {
-    const draws = yesNo.filter(({ market }) => isDrawMarket(market));
-    const teams = yesNo.filter(({ market }) => !isDrawMarket(market));
-    if (yesNo.length !== 3 || draws.length !== 1 || teams.length !== 2) {
-      for (const { market } of yesNo) skipped.push({ market, reason: "unexpected_3way" });
-    } else {
-      // Home first (groupItemThreshold 0), then draw, then away.
-      teams.sort((a, b) => Number(a.market.groupItemThreshold ?? 0) - Number(b.market.groupItemThreshold ?? 0));
-      const ordered = [teams[0], draws[0], teams[1]];
-      const names = [teams[0].market.groupItemTitle ?? "Thuis", teams[1].market.groupItemTitle ?? "Uit"];
-      const yesTokens = ordered.map(({ market }) => parseList(market.clobTokenIds)[0]);
-      const group = `1x2:${match.id}`;
-      ordered.forEach(({ market, event }, i) => {
-        const [yesToken, noToken] = parseList(market.clobTokenIds);
-        const isDraw = i === 1;
-        const team = isDraw ? "" : names[i === 0 ? 0 : 1];
-        const other = isDraw ? "" : names[i === 0 ? 1 : 0];
-        const base = { market, event, group, groupTokens: yesTokens, groupIndex: i };
-        candidates.push({
-          ...base,
-          tokenId: yesToken,
-          marketType: "winner",
-          pickLabel: isDraw ? `Gelijkspel${scope}` : `${team} wint${scope}`,
-          complement: false,
-        });
-        candidates.push({
-          ...base,
-          tokenId: noToken,
-          marketType: "double_chance",
-          pickLabel: isDraw
-            ? `Geen gelijkspel (${names[0]} of ${names[1]} wint)${scope}`
-            : `${team} wint níet (gelijk of ${other})${scope}`,
-          complement: true,
-        });
-      });
+  // One set of three per event: a game listed twice has two independent sets.
+  const yesNoByEvent = new Map<string, typeof yesNo>();
+  for (const w of yesNo) yesNoByEvent.set(w.event.id, [...(yesNoByEvent.get(w.event.id) ?? []), w]);
+  for (const [eventId, set] of yesNoByEvent) {
+    const draws = set.filter(({ market }) => isDrawMarket(market));
+    const teams = set.filter(({ market }) => !isDrawMarket(market));
+    if (set.length !== 3 || draws.length !== 1 || teams.length !== 2) {
+      for (const { market } of set) skipped.push({ market, reason: "unexpected_3way" });
+      continue;
     }
+    // Home first (groupItemThreshold 0), then draw, then away.
+    teams.sort((a, b) => Number(a.market.groupItemThreshold ?? 0) - Number(b.market.groupItemThreshold ?? 0));
+    const ordered = [teams[0], draws[0], teams[1]];
+    const names = [teams[0].market.groupItemTitle ?? "Thuis", teams[1].market.groupItemTitle ?? "Uit"];
+    const yesTokens = ordered.map(({ market }) => parseList(market.clobTokenIds)[0]);
+    const group = `1x2:${eventId}`;
+    ordered.forEach(({ market, event }, i) => {
+      const [yesToken, noToken] = parseList(market.clobTokenIds);
+      const isDraw = i === 1;
+      const team = isDraw ? "" : names[i === 0 ? 0 : 1];
+      const other = isDraw ? "" : names[i === 0 ? 1 : 0];
+      const base = { market, event, group, groupTokens: yesTokens, groupIndex: i };
+      candidates.push({
+        ...base,
+        tokenId: yesToken,
+        marketType: "winner",
+        pickLabel: isDraw ? `Gelijkspel${scope}` : `${team} wint${scope}`,
+        complement: false,
+      });
+      candidates.push({
+        ...base,
+        tokenId: noToken,
+        marketType: "double_chance",
+        pickLabel: isDraw
+          ? `Geen gelijkspel (${names[0]} of ${names[1]} wint)${scope}`
+          : `${team} wint níet (gelijk of ${other})${scope}`,
+        complement: true,
+      });
+    });
   }
 
-  return { info, candidates, skipped };
+  // Link each pick to the page of its own event ("-more-markets" markets show on the main page).
+  const withUrl = candidates.map((c) => ({ ...c, url: `${siteUrl}/event/${baseSlug(c.event.slug)}` }));
+  return { info, candidates: withUrl, skipped };
 }

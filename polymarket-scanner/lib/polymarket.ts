@@ -21,30 +21,56 @@ export class PolymarketError extends Error {
   }
 }
 
-const sleep = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms));
+/** Wait `ms`, but never past the deadline. */
+const sleep = (ms: number, deadline: Deadline) =>
+  new Promise((resolve) => setTimeout(resolve, Math.max(0, Math.min(ms, deadline.at - Date.now()))));
 
-/** fetch with timeout, and retries with exponential backoff on 429, 5xx and network errors. */
-async function request(url: string, source: "Gamma" | "CLOB", init: RequestInit = {}): Promise<unknown> {
+/** One deadline for a whole scan, so it ends well within the hosting time limit. */
+export type Deadline = { at: number; signal: AbortSignal };
+
+export function deadlineIn(ms: number): Deadline {
+  return { at: Date.now() + ms, signal: AbortSignal.timeout(ms) };
+}
+
+const errorText = (err: unknown) =>
+  err instanceof Error ? (err.name === "TimeoutError" || err.name === "AbortError" ? "time-out" : err.message) : String(err);
+
+/**
+ * fetch with a per-request timeout and retries with exponential backoff on
+ * 429, 5xx, network errors and broken response bodies, all within `deadline`.
+ */
+async function request(url: string, source: "Gamma" | "CLOB", deadline: Deadline, init: RequestInit = {}): Promise<unknown> {
   let lastError = "";
   for (let attempt = 0; attempt <= SCAN.maxRetries; attempt++) {
-    if (attempt > 0) await sleep(SCAN.backoffMs * 2 ** (attempt - 1) * (0.75 + Math.random() * 0.5));
+    if (attempt > 0) await sleep(SCAN.backoffMs * 2 ** (attempt - 1) * (0.75 + Math.random() * 0.5), deadline);
+    if (deadline.signal.aborted) {
+      lastError = "time-out";
+      break;
+    }
     let res: Response;
     try {
       res = await fetch(url, {
         ...init,
         cache: "no-store",
-        signal: AbortSignal.timeout(SCAN.requestTimeoutMs),
+        signal: AbortSignal.any([AbortSignal.timeout(SCAN.requestTimeoutMs), deadline.signal]),
         headers: { Accept: "application/json", "User-Agent": SCAN.userAgent, ...init.headers },
       });
     } catch (err) {
-      lastError = err instanceof Error ? (err.name === "TimeoutError" ? "time-out" : err.message) : String(err);
+      lastError = errorText(err);
       continue;
     }
-    if (res.ok) return res.json();
+    if (res.ok) {
+      try {
+        return await res.json();
+      } catch (err) {
+        lastError = errorText(err) === "time-out" ? "time-out" : "ongeldig antwoord";
+        continue; // interrupted or non-JSON body
+      }
+    }
     lastError = `HTTP ${res.status}`;
     if (res.status === 429 || res.status >= 500) {
       const retryAfter = Number(res.headers.get("retry-after"));
-      if (Number.isFinite(retryAfter) && retryAfter > 0) await sleep(Math.min(retryAfter, 10) * 1000);
+      if (Number.isFinite(retryAfter) && retryAfter > 0) await sleep(Math.min(retryAfter, 10) * 1000, deadline);
       continue;
     }
     break; // 4xx other than 429: retrying will not help
@@ -130,7 +156,12 @@ function trimEvent(ev: GammaEvent, dropped: Map<string, number>): GammaEvent {
  * All open game events with a kickoff in [from, to]. The window is cut into
  * slices that are paged in parallel (keyset paging itself is sequential).
  */
-export async function fetchGameEvents(from: Date, to: Date, dropped: Map<string, number>): Promise<GammaEvent[]> {
+export async function fetchGameEvents(
+  from: Date,
+  to: Date,
+  dropped: Map<string, number>,
+  deadline: Deadline,
+): Promise<GammaEvent[]> {
   const slices = 8;
   const span = (to.getTime() - from.getTime()) / slices;
   const ranges = Array.from({ length: slices }, (_, i) => [
@@ -148,7 +179,7 @@ export async function fetchGameEvents(from: Date, to: Date, dropped: Map<string,
       url.searchParams.set("start_time_min", min.toISOString());
       url.searchParams.set("start_time_max", max.toISOString());
       if (cursor) url.searchParams.set("after_cursor", cursor);
-      const data = (await request(url.toString(), "Gamma")) as { events?: GammaEvent[]; next_cursor?: string | null };
+      const data = (await request(url.toString(), "Gamma", deadline)) as { events?: GammaEvent[]; next_cursor?: string | null };
       for (const ev of data.events ?? []) events.push(trimEvent(ev, dropped));
       cursor = data.next_cursor ?? null;
       if (!cursor || !data.events?.length) break;
@@ -172,12 +203,12 @@ const toLevels = (levels: RawBook["bids"]) =>
   (levels ?? []).map((l) => ({ price: Number(l.price), size: Number(l.size) })).filter((l) => l.price > 0 && l.size > 0);
 
 /** Order books for many tokens, 500 per POST /books. Unknown tokens are simply absent. */
-export async function fetchBooks(tokenIds: string[]): Promise<Map<string, Book>> {
+export async function fetchBooks(tokenIds: string[], deadline: Deadline): Promise<Map<string, Book>> {
   const unique = [...new Set(tokenIds)];
   const chunks: string[][] = [];
   for (let i = 0; i < unique.length; i += SCAN.booksBatchSize) chunks.push(unique.slice(i, i + SCAN.booksBatchSize));
   const results = await pool(chunks, SCAN.maxConcurrency, (chunk) =>
-    request(`${API.clob}/books`, "CLOB", {
+    request(`${API.clob}/books`, "CLOB", deadline, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(chunk.map((token_id) => ({ token_id }))),
@@ -231,7 +262,7 @@ export function buildLegs(classified: Classified[], books: Map<string, Book>): L
         effPrice: round6(effectivePrice(ask, feeScheduleFor(c.market))),
         spread,
         liquidity: marketLiquidity(c),
-        url: info.url,
+        url: c.url,
       });
     }
   }
@@ -260,13 +291,14 @@ export function isUpcoming(ev: GammaEvent, now: Date, until: Date): boolean {
 export async function scan(now = new Date()): Promise<ScanResponse> {
   const until = new Date(now.getTime() + SCAN.windowHours * 3_600_000);
   const dropped = new Map<string, number>();
-  const events = (await fetchGameEvents(now, until, dropped)).filter((ev) => isUpcoming(ev, now, until));
+  const deadline = deadlineIn(SCAN.scanDeadlineMs);
+  const events = (await fetchGameEvents(now, until, dropped, deadline)).filter((ev) => isUpcoming(ev, now, until));
   const classified = groupMatches(events)
     .map((m) => classifyMatch(m, API.site))
     .filter((c) => c.candidates.length > 0);
 
   const tokens = classified.flatMap((c) => c.candidates.flatMap((x) => [x.tokenId, ...x.groupTokens]));
-  const books = await fetchBooks(tokens);
+  const books = await fetchBooks(tokens, deadline);
   const legs = buildLegs(classified, books);
 
   const skippedTypes = new Map(dropped);

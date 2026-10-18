@@ -86,9 +86,13 @@ export function comboKey(legs: Pick<Leg, "id">[]): string {
     .join("|");
 }
 
-/** Highest probability first; equal probability: higher EV first; then a stable key. */
+/**
+ * Highest probability first; equal probability: higher EV first; then a
+ * stable key. Probabilities that differ only by floating-point noise count as
+ * equal (27/199 x 65/199 equals 39/199 x 45/199, but not always bit for bit).
+ */
 export function compareCombos(a: Combo, b: Combo): number {
-  if (a.prob !== b.prob) return b.prob - a.prob;
+  if (Math.abs(a.prob - b.prob) > 1e-12 * Math.max(a.prob, b.prob)) return b.prob - a.prob;
   if (a.ev !== b.ev) return b.ev - a.ev;
   const ka = comboKey(a.legs);
   const kb = comboKey(b.legs);
@@ -507,9 +511,23 @@ export function findBestCombos(
     candidates.sort(compareCombos);
     stats.candidates += candidates.length;
 
+    // Below the worst combo of a full (cut-off) list, combos of that leg count
+    // may be missing, so picking further could skip better ones. Stop there and
+    // let the next round dig deeper (except in the last round, to fill the list).
+    let horizon = 0;
+    for (let c = minLegs; c <= maxLegs; c++) {
+      const list = perCount[c];
+      if (list.length < roundCapTopK) continue;
+      let worst = Infinity;
+      for (const node of list) worst = Math.min(worst, dp.q[node]);
+      horizon = Math.max(horizon, Math.exp(worst));
+    }
+    const lastRound = round === maxRounds - 1;
+
     let newlyExhausted = false;
     for (const combo of candidates) {
       if (picked.length >= maxResults) break;
+      if (!lastRound && combo.prob < horizon * (1 - 1e-9)) break;
       const key = comboKey(combo.legs);
       if (pickedKeys.has(key)) continue;
       if (combo.legs.some((leg) => (usage.get(leg.id) ?? 0) >= reuse)) continue;
