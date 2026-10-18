@@ -1,0 +1,21 @@
+import type { Metadata, Viewport } from "next";
+import "./globals.css";
+
+export const metadata: Metadata = {
+  title: "Polymarket Combo Scanner",
+  description: "Analyse-tool: combos van sportwedstrijden op Polymarket met de hoogste kans bij een minimale return.",
+  robots: { index: false, follow: false },
+};
+
+export const viewport: Viewport = {
+  width: "device-width",
+  initialScale: 1,
+};
+
+export default function RootLayout({ children }: LayoutProps<"/">) {
+  return (
+    <html lang="nl" className="h-full antialiased">
+      <body className="flex min-h-full flex-col">{children}</body>
+    </html>
+  );
+}
