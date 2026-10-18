@@ -7,6 +7,11 @@
 [build.environment]
   NODE_VERSION = "22"
 
+# Next.js runtime (OpenNext adapter): turns the API route into a function.
+# No version pin: Netlify keeps it up to date.
+[[plugins]]
+  package = "@netlify/plugin-nextjs"
+
 [[headers]]
   for = "/*"
   [headers.values]

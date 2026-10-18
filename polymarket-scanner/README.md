@@ -63,7 +63,11 @@ npm run build    # productie-build, moet foutloos zijn
 
 ## Online zetten op Netlify
 
-Er zijn geen geheime keys nodig. **Let op: iedereen met de link kan de site zien.** De site vraagt zoekmachines om haar niet te indexeren (`noindex`).
+De site staat online op **https://polymarket-combo-scanner.netlify.app**. Het Netlify-project heet `polymarket-combo-scanner`.
+
+- Deze versie is één keer geüpload. Hij is nog **niet** aan GitHub gekoppeld, dus wijzigingen gaan niet vanzelf online. Wil je dat wel, volg dan optie A. Kies daarbij in stap 2 **Project configuration** → **Build & deploy** → **Link repository** bij het bestaande project, in plaats van een nieuw project.
+- Er zijn geen geheime keys nodig.
+- **Let op: iedereen met de link kan de site zien.** De site vraagt zoekmachines om haar niet te indexeren (`noindex`).
 
 ### Optie A: via GitHub (aanbevolen, werkt automatisch bij elke push)
 
