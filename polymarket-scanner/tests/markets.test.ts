@@ -177,17 +177,17 @@ describe("legs uit orderboeken", () => {
 
     const sum = 0.645 + 0.205 + 0.155;
     const home = get("Tottenham Hotspur FC wint (90 min)");
-    expect(home.fairProb).toBeCloseTo(0.645 / sum, 12);
+    expect(home.fairProb).toBeCloseTo(0.645 / sum, 6);
     expect(home.askPrice).toBe(0.65);
-    expect(home.effPrice).toBeCloseTo(0.65 + 0.05 * 0.65 * 0.35, 12);
+    expect(home.effPrice).toBeCloseTo(0.65 + 0.05 * 0.65 * 0.35, 6);
     expect(home.spread).toBeCloseTo(0.01, 12);
     expect(home.liquidity).toBeGreaterThan(1000);
     expect(home.matchId).toBe("1140915");
 
     const notHome = get("Tottenham Hotspur FC wint níet (gelijk of Coventry City FC) (90 min)");
-    expect(notHome.fairProb).toBeCloseTo(1 - 0.645 / sum, 12);
+    expect(notHome.fairProb).toBeCloseTo(1 - 0.645 / sum, 6);
     expect(notHome.askPrice).toBeCloseTo(0.36, 12); // own No book: 1 - 0.64
-    expect(get("Over 2,5 goals").fairProb).toBeCloseTo(0.605, 12);
+    expect(get("Over 2,5 goals").fairProb).toBeCloseTo(0.605, 6);
     expect(new Set(legs.map((l) => l.matchId)).size).toBe(1);
   });
 
@@ -201,7 +201,7 @@ describe("legs uit orderboeken", () => {
     ]);
     const legs = buildLegs([{ ...c, candidates: ml }], books);
     expect(legs).toHaveLength(2);
-    expect(legs[0].effPrice).toBeCloseTo(0.4 + 0.03 * 0.4 * 0.6, 12);
+    expect(legs[0].effPrice).toBeCloseTo(0.4 + 0.03 * 0.4 * 0.6, 6);
   });
 
   it("geen orderboek of een lege kant: geen leg", () => {

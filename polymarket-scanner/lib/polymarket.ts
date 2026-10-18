@@ -215,7 +215,7 @@ export function buildLegs(classified: Classified[], books: Map<string, Book>): L
       const { bid, ask } = bestQuote(book);
       if (bid === null || ask === null) continue;
       const fairProb = c.complement ? 1 - probs[c.groupIndex] : probs[c.groupIndex];
-      const spread = Math.round((ask - bid) * 1e6) / 1e6;
+      const spread = round6(ask - bid);
       if (!(fairProb > 0) || spread > LIMITS.maxSpread.max) continue;
       legs.push({
         id: c.tokenId,
@@ -226,9 +226,9 @@ export function buildLegs(classified: Classified[], books: Map<string, Book>): L
         kickoff: info.kickoff,
         marketType: c.marketType,
         pickLabel: c.pickLabel,
-        fairProb,
+        fairProb: round6(fairProb),
         askPrice: ask,
-        effPrice: effectivePrice(ask, feeScheduleFor(c.market)),
+        effPrice: round6(effectivePrice(ask, feeScheduleFor(c.market))),
         spread,
         liquidity: marketLiquidity(c),
         url: info.url,
@@ -237,6 +237,9 @@ export function buildLegs(classified: Classified[], books: Map<string, Book>): L
   }
   return legs;
 }
+
+/** 6 decimals is far below what the UI shows and keeps the response small. */
+const round6 = (x: number) => Math.round(x * 1e6) / 1e6;
 
 function marketLiquidity(c: LegCandidate): number {
   const n = Number(c.market.liquidityNum ?? c.market.liquidity);
