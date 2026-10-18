@@ -105,5 +105,6 @@ Lukt dat niet, dan toont de site een foutmelding. Kijk dan in Netlify bij **Logs
 |---|---|
 | Fee-percentage | `lib/config.ts` → `FEES`. Standaard leest de scanner de fee per markt uit Polymarket (`useMarketFeeSchedule: true`); `defaultRate: 0.05` is de terugval. |
 | Standaardwaarden van de schuifjes | `lib/config.ts` → `DEFAULT_SETTINGS` |
+| Max. kans per leg (standaard 80%: geen bijna-zekere "opvul"-legs) | `lib/config.ts` → `maxLegProb`, of de schuif op de site |
 | Tijdvenster (48 uur) en cache (60 s) | `lib/config.ts` → `SCAN` |
 | Hoe vaak dezelfde leg in de toplijst mag (3) | `lib/config.ts` → `maxLegReuse` |

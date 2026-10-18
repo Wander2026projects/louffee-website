@@ -39,6 +39,10 @@ export function HowItWorks() {
             Voetbaluitslagen gaan over <strong>90 minuten plus blessuretijd</strong>, ook in bekerwedstrijden. Bij ijshockey,
             basketbal en American football telt de verlenging mee; bij tennis wint wie doorgaat.
           </li>
+          <li>
+            <strong>Max. kans per leg</strong> (standaard 80%): legs met een hogere kans laat de scanner weg. Een leg van 97%
+            verhoogt de return nauwelijks, maar kost wel spread en fees en maakt de combo alleen maar langer.
+          </li>
           <li>Dezelfde leg staat in maximaal 3 combos, anders lijken alle resultaten op elkaar.</li>
         </ul>
       </div>

@@ -113,9 +113,24 @@ describe("filters", () => {
       marketTypes: ["winner", "btts"],
       minLiquidity: 500,
       maxSpread: 0.04,
+      maxLegProb: 1,
     });
     expect(kept.map((l) => l.id)).toEqual(["ok", "btts"]);
-    expect(filterLegs(legs, { sports: null, marketTypes: ["winner"], minLiquidity: 0, maxSpread: 1 })).toHaveLength(4);
+    expect(
+      filterLegs(legs, { sports: null, marketTypes: ["winner"], minLiquidity: 0, maxSpread: 1, maxLegProb: 1 }),
+    ).toHaveLength(4);
+  });
+
+  it("slaat bijna-zekere legs over boven de max. kans per leg", () => {
+    const legs = [
+      fakeLeg({ id: "safe", matchId: "1", fairProb: 0.97, effPrice: 0.976 }),
+      fakeLeg({ id: "eighty", matchId: "2", fairProb: 0.8, effPrice: 0.81 }),
+      fakeLeg({ id: "coin", matchId: "3", fairProb: 0.5, effPrice: 0.52 }),
+    ];
+    const filter = { sports: null, marketTypes: ["winner" as const], minLiquidity: 0, maxSpread: 1 };
+    expect(filterLegs(legs, { ...filter, maxLegProb: 0.8 }).map((l) => l.id)).toEqual(["eighty", "coin"]);
+    expect(filterLegs(legs, { ...filter, maxLegProb: 0.7 }).map((l) => l.id)).toEqual(["coin"]);
+    expect(filterLegs(legs, { ...filter, maxLegProb: 1 })).toHaveLength(3);
   });
 
   it("diversiteit: dezelfde leg in maximaal N combos", () => {

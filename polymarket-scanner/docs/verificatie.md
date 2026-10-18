@@ -53,7 +53,7 @@ App gaf: 48.73% · 2.000008× · EV 0.974571. Verschil kans 0.000000, return 0.0
   - elke leg kost bijna niets aan kans;
   - de return stijgt per leg net genoeg om de drempel te halen.
 
-  In de praktijk betekenen zulke legs wel extra fees en extra orders. Wil je ze niet zien, stel dan het max. aantal legs lager in.
+  In de praktijk betekenen zulke legs wel extra fees en extra orders. **Daarom heeft de site nu de instelling "Max. kans per leg" (standaard 80%), die zulke opvul-legs weglaat.** De controle hierboven is gedaan vóór die instelling bestond, met de toenmalige standaard (geen limiet). De rekenregels zijn niet veranderd.
 - **Wat de app niet meerekent.** Polymarkets eigen Combo-functie (RFQ) en het doorlopen van meerdere prijsniveaus bij grote inzetten zitten niet in deze getallen (zie "Hoe werkt dit?" op de site).
 
 ## Zelf opnieuw doen

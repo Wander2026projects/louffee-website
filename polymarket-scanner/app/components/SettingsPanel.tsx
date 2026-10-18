@@ -1,7 +1,7 @@
 "use client";
 
 import { ALL_MARKET_TYPES, LIMITS, MARKET_TYPE_LABELS, type Settings } from "@/lib/config";
-import { cents, num, usd } from "@/lib/format";
+import { cents, num, pct, usd } from "@/lib/format";
 import type { MarketType } from "@/lib/types";
 
 /** Slider positions for the minimum return: fine steps where it matters most. */
@@ -16,6 +16,7 @@ export const RETURN_STEPS: number[] = (() => {
 
 const SPREAD_STEPS = [0.005, 0.01, 0.015, 0.02, 0.025, 0.03, 0.04, 0.05, 0.06, 0.08, 0.1, 0.15, 0.2];
 const LIQUIDITY_STEPS = [0, 100, 250, 500, 1000, 2500, 5000, 10_000, 25_000, 50_000];
+const LEG_PROB_STEPS = [0.5, 0.55, 0.6, 0.65, 0.7, 0.75, 0.8, 0.85, 0.9, 0.95, 1];
 const RESULT_OPTIONS = [10, 25, 50, 100];
 
 function nearestIndex(steps: number[], value: number): number {
@@ -115,6 +116,13 @@ export function SettingsPanel({ settings, onChange, sports }: Props) {
           steps={SPREAD_STEPS}
           current={settings.maxSpread}
           onPick={(v) => set({ maxSpread: v })}
+        />
+        <Slider
+          label="Max. kans per leg"
+          value={settings.maxLegProb >= 1 ? "geen limiet" : pct(settings.maxLegProb, 0)}
+          steps={LEG_PROB_STEPS}
+          current={settings.maxLegProb}
+          onPick={(v) => set({ maxLegProb: v })}
         />
         <div>
           <Label>Aantal resultaten</Label>

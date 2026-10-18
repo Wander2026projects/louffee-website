@@ -10,9 +10,9 @@ const n1 = nf(1, 1);
 const n2 = nf(2, 2);
 const n3 = nf(3, 3);
 
-/** 0.4821 -> "48,2%" */
-export function pct(p: number): string {
-  return `${n1.format(p * 100)}%`;
+/** 0.4821 -> "48,2%" (or "48%" with digits = 0) */
+export function pct(p: number, digits = 1): string {
+  return `${(digits === 1 ? n1 : nf(0, digits)).format(p * 100)}%`;
 }
 
 /** 2.0534 -> "2,05×" */

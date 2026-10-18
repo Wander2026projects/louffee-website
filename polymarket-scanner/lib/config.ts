@@ -54,6 +54,7 @@ export const DEFAULT_SETTINGS: Settings = {
   maxLegs: 5,
   minLiquidity: 500,
   maxSpread: 0.04,
+  maxLegProb: 0.8, // legs above 80% add little return but still cost spread and fees
   maxResults: 25,
   maxLegReuse: 3, // the same leg in at most this many combos of the list
 };
@@ -63,5 +64,6 @@ export const LIMITS = {
   legs: { min: 2, max: 5 },
   minLiquidity: { min: 0, max: 50_000 },
   maxSpread: { min: 0.005, max: 0.2, step: 0.005 },
+  maxLegProb: { min: 0.5, max: 1 },
   maxResults: { min: 5, max: 100 },
 } as const;

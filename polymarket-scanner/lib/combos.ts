@@ -15,6 +15,7 @@ export type LegFilter = {
   marketTypes: MarketType[];
   minLiquidity: number; // USD
   maxSpread: number; // price units, 0.04 = 4 cents
+  maxLegProb: number; // skip near-certain legs: fairProb above this (1 = no limit)
 };
 
 export type OptimizerOptions = {
@@ -116,7 +117,8 @@ export function filterLegs(legs: Leg[], filter: LegFilter): Leg[] {
       (!sports || sports.has(leg.sport)) &&
       types.has(leg.marketType) &&
       leg.liquidity >= filter.minLiquidity &&
-      leg.spread <= filter.maxSpread + EPS,
+      leg.spread <= filter.maxSpread + EPS &&
+      leg.fairProb <= filter.maxLegProb + EPS,
   );
 }
 
