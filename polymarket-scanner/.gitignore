@@ -45,3 +45,6 @@ next-env.d.ts
 
 # netlify
 .netlify
+
+# temporary test files from reviews
+/tests/tmp-*
